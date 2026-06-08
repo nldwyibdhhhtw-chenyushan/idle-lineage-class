@@ -324,80 +324,14 @@
     <div class="flex items-center gap-3">
         <button onclick="revive()" id="btn-revive" class="hidden bg-red-800 hover:bg-red-700 px-6 py-1.5 text-white font-bold border border-red-500 rounded anim-flash text-base shadow-md">祈求復活</button>
         <button onclick="reviveInPlace()" id="btn-revive-inplace" class="hidden bg-yellow-700 hover:bg-yellow-600 px-6 py-1.5 text-white font-bold border border-yellow-500 rounded anim-flash text-base shadow-md">原地復活</button>
-        <select id="map-select" class="bg-slate-800 border border-slate-600 text-white px-3 py-1.5 text-base rounded outline-none" onchange="changeMap()">
-                        <optgroup label="城鎮 (安全區域)">
-                            <option value="town_silver_knight">銀騎士村</option>
-                            <option value="town_elf">妖精森林</option>
-                            <option value="town_talking">說話之島</option>
-							<option value="town_gludio">燃柳村</option>
-                            <option value="town_giran">奇岩</option>
-                            <option value="town_heine">海音</option>
-							<option value="town_oren">歐瑞村莊</option>
-							<option value="town_ivory_tower">象牙塔</option>
-							<option value="town_witon">威頓村</option>
-                        </optgroup>
-                        <optgroup label="狩獵區域">
-                            <option value="training">新兵修練場</option>
-                            <option value="silver_knight">銀騎士地區</option>
-                            <option value="talking_island">說話之島周邊</option>
-                            <option value="zone_01">妖精森林周邊</option>
-                            <option value="talking_island_port">說話之島港口</option>
-                            <option value="elf_forest">妖魔森林</option>
-                            <option value="gludio">古魯丁</option>
-                            <option value="windwood">風木</option>
-                            <option value="desert">沙漠</option>
-                            <option value="kent">肯特</option>
-                            <option value="dragon_valley">龍之谷</option>
-                            <option value="fire_dragon">火龍窟</option>
-                            <option value="giran">奇岩</option>
-                            <option value="heine">海音</option>
-                            <option value="mirror_forest">鏡子森林</option>
-                            <option value="zone_02">歐瑞</option>
-                            <option value="zone_03">歐瑞雪原</option>
-                            <option value="zone_04">艾爾摩激戰地</option>
-                            <option value="zone_05">國境要塞</option>
-                            <option value="zone_06">古魯丁地監1樓</option>
-                            <option value="zone_07">古魯丁地監2樓</option>
-                            <option value="zone_08">古魯丁地監3樓</option>
-                            <option value="zone_09">古魯丁地監4樓</option>
-                            <option value="zone_10">古魯丁地監5樓</option>
-                            <option value="zone_11">古魯丁地監6樓</option>
-                            <option value="zone_12">古魯丁地監7樓</option>
-                            <option value="zone_13">說話之島地監1樓</option>
-                            <option value="zone_14">說話之島地監2樓</option>
-                            <option value="zone_15">眠龍洞穴1樓</option>
-                            <option value="zone_16">眠龍洞穴2樓</option>
-                            <option value="zone_17">眠龍洞穴3樓</option>
-                            <option value="zone_18">奇岩地監1樓</option>
-                            <option value="zone_19">奇岩地監2樓</option>
-                            <option value="zone_20">奇岩地監3樓</option>
-                            <option value="zone_21">奇岩地監4樓</option>
-                            <option value="zone_22">沙漠地監1樓</option>
-                            <option value="zone_23">沙漠地監2樓</option>
-                            <option value="zone_24">沙漠地監3樓</option>
-                            <option value="zone_25">沙漠地監4樓</option>
-                            <option value="zone_26">龍之谷地監1樓</option>
-                            <option value="zone_27">龍之谷地監2樓</option>
-                            <option value="zone_28">龍之谷地監3樓</option>
-                            <option value="zone_29">龍之谷地監4樓</option>
-                            <option value="zone_30">龍之谷地監5樓</option>
-                            <option value="zone_31">龍之谷地監6樓</option>
-                            <option value="zone_32">螞蟻洞窟1樓</option>
-                            <option value="zone_33">螞蟻洞窟2樓</option>
-                            <option value="zone_34">地下通道1樓</option>
-                            <option value="zone_35">地下通道2樓</option>
-                            <option value="zone_36">地下通道3樓</option>
-                            <option value="eva_kingdom">伊娃王國</option>
-                            <option value="zone_37">象牙塔4樓</option>
-                            <option value="zone_38">象牙塔5樓</option>
-                            <option value="zone_39">象牙塔6樓</option>
-                            <option value="zone_40">象牙塔7樓</option>
-                            <option value="zone_41">象牙塔8樓</option>
-                            <option value="antaras_lair">安塔瑞斯棲息地(純BOSS房)</option>
-                            <option value="fafurion_lair">法利昂巢穴(純BOSS房)</option>
-                            <option value="valakas_lair">巴拉卡斯巢穴(純BOSS房)</option>
-                        </optgroup>
-                    </select>
+        <button onclick="returnToTown()" id="btn-return-town" class="bg-emerald-800 hover:bg-emerald-700 px-4 py-1.5 text-white font-bold border border-emerald-500 rounded text-base shadow-md whitespace-nowrap">回村</button>
+        <select id="map-category" class="bg-slate-800 border border-slate-600 text-white px-3 py-1.5 text-base rounded outline-none" onchange="onMapCategoryChange()">
+            <option value="village">村莊</option>
+            <option value="wild">野外</option>
+            <option value="dungeon">地監</option>
+            <option value="special">特殊</option>
+        </select>
+        <select id="map-select" class="bg-slate-800 border border-slate-600 text-white px-3 py-1.5 text-base rounded outline-none" onchange="changeMap()"></select>
                 </div>
             </div> <!-- 👈 就是少了這個標籤！它是用來把 panel-header 關閉的 -->
             
@@ -758,6 +692,12 @@ const DB = {
         "item_ancientkey": { n: "古代鑰匙", p: 1, c: "text-amber-300", d: "試煉所需的材料。", gachaWeight: 0 },
         "item_nightvision": { n: "夜之視野", p: 1, c: "text-indigo-300", d: "試煉所需的材料。", gachaWeight: 0 },
         "candle": { n: "回憶蠟燭", type: "misc", req: "all", p: 100000, c: "text-red-500", d: "退還所有能力點數，重新分配", eff: "reset", gachaWeight: 0 },
+        "panacea_str": { n: "萬能藥(STR)", type: "misc", req: "all", p: 10000, c: "text-pink-300", d: "使用可永久提升力量+1，直到使用回憶蠟燭為止（最多10瓶，不可突破屬性上限60）", eff: "panacea", pstat: "str", gachaWeight: 0 },
+        "panacea_dex": { n: "萬能藥(DEX)", type: "misc", req: "all", p: 10000, c: "text-pink-300", d: "50等才能使用，可永久提升敏捷+1，直到使用回憶蠟燭為止（最多10瓶，不可突破屬性上限60）", eff: "panacea", pstat: "dex", plv: 50, gachaWeight: 0 },
+        "panacea_con": { n: "萬能藥(CON)", type: "misc", req: "all", p: 10000, c: "text-pink-300", d: "50等才能使用，可永久提升體質+1，直到使用回憶蠟燭為止（最多10瓶，不可突破屬性上限60）", eff: "panacea", pstat: "con", plv: 50, gachaWeight: 0 },
+        "panacea_int": { n: "萬能藥(INT)", type: "misc", req: "all", p: 10000, c: "text-pink-300", d: "50等才能使用，可永久提升智力+1，直到使用回憶蠟燭為止（最多10瓶，不可突破屬性上限60）", eff: "panacea", pstat: "int", plv: 50, gachaWeight: 0 },
+        "panacea_wis": { n: "萬能藥(WIS)", type: "misc", req: "all", p: 10000, c: "text-pink-300", d: "50等才能使用，可永久提升精神+1，直到使用回憶蠟燭為止（最多10瓶，不可突破屬性上限60）", eff: "panacea", pstat: "wis", plv: 50, gachaWeight: 0 },
+        "panacea_cha": { n: "萬能藥(CHA)", type: "misc", req: "all", p: 10000, c: "text-pink-300", d: "50等才能使用，可永久提升魅力+1，直到使用回憶蠟燭為止（最多10瓶，不可突破屬性上限30）", eff: "panacea", pstat: "cha", plv: 50, gachaWeight: 0 },
         
         "new_item_142": { n: "哨子", type: "pot", req: "all", p: 165, d: "可用於呼叫或解散寵物", eff: "whistle", gachaWeight: 0 },
         "new_item_collar_husky": { n: "項圈 (哈士奇)", p: 10, gachaWeight: 0 },
@@ -1012,7 +952,7 @@ const DB = {
         "orc_archer": { n: "妖魔弓箭手", lv: 3, s: "S", beh: "被動", race: "妖魔", e: "fire", hp: 12, ac: 10, mr: 2, exp: 10, goldMin: 11, goldMax: 32, atkSpd: 2, dmg: [1, 3], db: 0, hit: 0 },
         "gremlin": { n: "地靈", lv: 3, s: "S", beh: "被動", race: "地靈", e: "earth", hp: 7, ac: 10, mr: 2, exp: 10, goldMin: 11, goldMax: 32, atkSpd: 2, dmg: [1, 3], db: 0, hit: 0 },
         "nm_001": { n: "污染的地精靈", lv: 3, s: "S", beh: "被動", race: "元素", elem: true, e: "earth", hp: 10, ac: 10, mr: 10, exp: 10, goldMin: 11, goldMax: 32, atkSpd: 2, dmg: [1, 3], db: 0, hit: 0 },
-        "nm_002": { n: "蘑菇", lv: 4, s: "S", beh: "被動", race: "蘑菇", e: "wind", hp: 20, ac: 5, mr: 0, exp: 17, goldMin: 0, goldMax: 0, atkSpd: 2, dmg: [1, 4], db: 0, hit: 0 },
+        "nm_002": { n: "蘑菇", lv: 4, s: "S", beh: "被動", race: "蘑菇", e: "earth", hp: 20, ac: 5, mr: 0, exp: 17, goldMin: 0, goldMax: 0, atkSpd: 2, dmg: [1, 4], db: 0, hit: 0, mag: { skn: "中毒", cd: 100, type: "poison", pbase: 30, d: 10, tick: 5, dur: 20 } },
         "nm_003": { n: "狼", lv: 4, s: "S", beh: "被動", race: "動物", e: "wind", hp: 30, ac: 10, mr: 2, exp: 37, goldMin: 0, goldMax: 0, atkSpd: 2, dmg: [1, 4], db: 0, hit: 0 },
         "nm_004": { n: "哈士奇", lv: 5, s: "S", beh: "被動", race: "動物", e: "water", hp: 30, ac: 10, mr: 1, exp: 26, goldMin: 13, goldMax: 36, atkSpd: 2, dmg: [1, 5], db: 1, hit: 0 },
         "侏儒": { n: "侏儒", lv: 5, s: "S", beh: "被動", race: "侏儒", e: "earth", hp: 30, ac: 10, mr: 2, exp: 26, goldMin: 13, goldMax: 36, atkSpd: 2, dmg: [1, 5], db: 1, hit: 0 },
@@ -1108,8 +1048,8 @@ const DB = {
         "succubus": { n: "思克巴", lv: 37, s: "S", beh: "主動", race: "思克巴", e: "earth", hp: 400, ac: -25, mr: 50, exp: 1370, goldMin: 153, goldMax: 244, atkSpd: 1.8, dmg: [2, 30], db: 37, hit: 26, mag: { skn: "吸血鬼之吻", cd: 80, dmg: [2, 10], db: 37, ele: "none", vamp: [1, 37] } },
         "salamander": { n: "火蜥蜴", lv: 38, s: "S", beh: "主動", race: "元素", elem: true, e: "fire", hp: 383, ac: -23, mr: 11, exp: 1450, goldMin: 165, goldMax: 284, atkSpd: 1.5, dmg: [4, 10], db: 44, hit: 28 },
         "fire_egg": { n: "火炎蛋", lv: 39, s: "S", beh: "主動", race: "元素", elem: true, e: "fire", hp: 500, ac: -36, mr: 40, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 2, dmg: [4, 15], db: 14, hit: 26 },
-        "nm_023": { n: "閃電球", lv: 39, s: "S", beh: "主動", race: "元素", elem: true, e: "wind", hp: 340, ac: -40, mr: 40, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 1, dmg: [2, 15], db: 14, hit: 26 },
-        "nm_024": { n: "鎧甲守衛", lv: 39, s: "L", beh: "主動", race: "元素", elem: true, e: "earth", hp: 400, ac: -40, mr: 0, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 4, dmg: [4, 18], db: 48, hit: 23 },
+        "nm_023": { n: "夢幻之島閃電球", lv: 39, s: "S", beh: "主動", race: "元素", elem: true, e: "wind", hp: 340, ac: -40, mr: 40, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 1, dmg: [2, 15], db: 14, hit: 26 },
+        "nm_024": { n: "夢幻之島鎧甲守衛", lv: 39, s: "L", beh: "主動", race: "元素", elem: true, e: "earth", hp: 400, ac: -40, mr: 0, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 4, dmg: [4, 28], db: 48, hit: 23 },
         "cyclops": { n: "獨眼巨人", lv: 40, s: "L", beh: "主動", race: "巨人", e: "wind", hp: 800, ac: -23, mr: 30, exp: 1601, goldMin: 265, goldMax: 429, atkSpd: 2, dmg: [4, 20], db: 40, hit: 30 },
         "succubus_queen": { n: "思克巴女皇", lv: 41, s: "S", beh: "主動", race: "思克巴", e: "earth", hp: 500, ac: -32, mr: 80, exp: 1682, goldMin: 162, goldMax: 256, atkSpd: 1.8, dmg: [2, 41], db: 41, hit: 33, mag: { skn: "吸血鬼之吻", cd: 80, dmg: [2, 11], db: 41, ele: "none", vamp: [1, 41] } },
         "nm_025": { n: "影魔", lv: 41, s: "S", beh: "主動", race: "不死", un: true, e: "earth", hp: 832, ac: -43, mr: 30, exp: 1682, goldMin: 362, goldMax: 656, atkSpd: 1.5, dmg: [2, 42], db: 35, hit: 33 },
@@ -1117,11 +1057,21 @@ const DB = {
         "necromancer": { n: "巫師", lv: 42, s: "S", beh: "主動", race: "長老", e: "none", hp: 800, ac: -32, mr: 80, exp: 1765, goldMin: 350, goldMax: 500, atkSpd: 2, dmg: [2, 31], db: 42, hit: 35, mag: { skn: "極光雷電", cd: 80, dmg: [1, 80], db: 82, ele: "wind" } },
         "lava_golem": { n: "熔岩高崙", lv: 43, s: "L", beh: "主動", race: "高崙", e: "fire", hp: 700, ac: -18, mr: 50, exp: 1850, goldMin: 350, goldMax: 500, atkSpd: 3, dmg: [1, 21], db: 86, hit: 30, mag: { skn: "燃燒的火球", cd: 80, dmg: [1, 20], db: 43, ele: "fire" } },
         "nm_027": { n: "紅鬼魂", lv: 43, s: "S", beh: "主動", race: "不死", un: true, e: "earth", hp: 666, ac: -33, mr: 5, exp: 1850, goldMin: 150, goldMax: 700, atkSpd: 2, dmg: [3, 33], db: 0, hit: 36 },
-        "nm_028": { n: "火精靈王", lv: 43, s: "L", beh: "被動", race: "元素", elem: true, e: "fire", hp: 1500, ac: -53, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 2, dmg: [3, 21], db: 43, hit: 30, mag: { skn: "爆炎的火球", cd: 50, dmg: [1, 40], db: 53, ele: "fire" } },
-        "nm_029": { n: "水精靈王", lv: 43, s: "L", beh: "被動", race: "元素", elem: true, e: "water", hp: 2500, ac: -53, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 2, dmg: [3, 21], db: 33, hit: 30, mag: { skn: "水柱", cd: 50, dmg: [3, 30], db: 33, ele: "water" } },
-        "nm_030": { n: "風精靈王", lv: 43, s: "L", beh: "被動", race: "元素", elem: true, e: "wind", hp: 1500, ac: -53, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 1, dmg: [3, 21], db: 10, hit: 33, mag: { skn: "龍捲風", cd: 50, dmg: [4, 30], db: 20, ele: "wind" } },
-        "nm_031": { n: "地精靈王", lv: 43, s: "L", beh: "被動", race: "元素", elem: true, e: "earth", hp: 2000, ac: -53, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 3, dmg: [2, 21], db: 80, hit: 29, mag: { skn: "巨石之擊", cd: 50, dmg: [2, 60], db: 13, ele: "earth" } },
-        "nm_032": { n: "獨角獸", lv: 43, s: "L", beh: "被動", race: "獨角獸", e: "earth", hp: 3000, ac: -48, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 1.5, dmg: [2, 21], db: 40, hit: 33 },
+        "nm_028": { n: "火精靈王", lv: 43, s: "L", beh: "主動", race: "元素", elem: true, boss: true, e: "fire", hp: 1500, ac: -53, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 2, dmg: [3, 41], db: 43, hit: 40, mag: { skn: "爆炎的火球", cd: 50, dmg: [1, 50], db: 53, ele: "fire", alwaysHit: true } },
+        "nm_029": { n: "水精靈王", lv: 43, s: "L", beh: "主動", race: "元素", elem: true, boss: true, e: "water", hp: 2500, ac: -53, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 2, dmg: [3, 21], db: 33, hit: 40, mag: { skn: "水柱", cd: 50, dmg: [3, 30], db: 43, ele: "water", alwaysHit: true } },
+        "nm_030": { n: "風精靈王", lv: 43, s: "L", beh: "主動", race: "元素", elem: true, boss: true, e: "wind", hp: 1500, ac: -53, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 1, dmg: [3, 41], db: 10, hit: 43, mag: { skn: "龍捲風", cd: 50, dmg: [4, 30], db: 30, ele: "wind", alwaysHit: true } },
+        "nm_031": { n: "地精靈王", lv: 43, s: "L", beh: "主動", race: "元素", elem: true, boss: true, e: "earth", hp: 2000, ac: -53, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 3, dmg: [2, 61], db: 80, hit: 49, mag: { skn: "巨石之擊", cd: 50, dmg: [2, 60], db: 23, ele: "earth", alwaysHit: true } },
+        "nm_032": { n: "獨角獸", lv: 43, s: "L", beh: "主動", race: "獨角獸", boss: true, e: "earth", hp: 3000, ac: -48, mr: 45, exp: 3601, goldMin: 450, goldMax: 790, atkSpd: 1.5, dmg: [2, 31], db: 60, hit: 43 },
+        "nm_037": { n: "夢魘", lv: 40, s: "L", beh: "主動", race: "惡魔", boss: true, e: "none", hp: 1500, ac: -42, mr: 80, exp: 1601, goldMin: 161, goldMax: 264, atkSpd: 1.5, dmg: [1, 100], db: 20, hit: 40 },
+        "nm_038": { n: "夢幻之島蘑菇", lv: 30, s: "S", beh: "主動", race: "蘑菇", e: "earth", hp: 250, ac: -27, mr: 0, exp: 901, goldMin: 165, goldMax: 215, atkSpd: 1, dmg: [1, 47], db: 15, hit: 23, mag: { skn: "中毒", cd: 100, type: "poison", pbase: 100, d: 30, tick: 5, dur: 20 } },
+        "nm_039": { n: "夢幻之島鬼火", lv: 30, s: "S", beh: "主動", race: "鬼火", e: "earth", hp: 360, ac: -33, mr: 35, exp: 901, goldMin: 165, goldMax: 215, atkSpd: 2, dmg: [2, 37], db: 25, hit: 24 },
+        "nm_040": { n: "夢幻之島火蜥蜴", lv: 38, s: "S", beh: "主動", race: "元素", elem: true, e: "fire", hp: 383, ac: -28, mr: 11, exp: 1450, goldMin: 165, goldMax: 284, atkSpd: 1.5, dmg: [4, 15], db: 34, hit: 28 },
+        "nm_041": { n: "夢幻之島殺人蜂", lv: 38, s: "S", beh: "被動", race: "昆蟲", e: "none", hp: 200, ac: -36, mr: 10, exp: 1450, goldMin: 43, goldMax: 444, atkSpd: 0.5, dmg: [1, 36], db: 1, hit: 35 },
+        "nm_042": { n: "夢幻之島暴走兔", lv: 38, s: "S", beh: "被動", race: "動物", e: "none", hp: 250, ac: -26, mr: 30, exp: 1450, goldMin: 343, goldMax: 444, atkSpd: 1, dmg: [2, 16], db: 15, hit: 33, mag: { skn: "冰錐", cd: 30, dmg: [1, 30], db: 23, ele: "water", alwaysHit: true } },
+        "nm_043": { n: "夢幻之島火炎蛋", lv: 39, s: "S", beh: "主動", race: "元素", elem: true, e: "fire", hp: 500, ac: -36, mr: 40, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 2, dmg: [4, 15], db: 14, hit: 26 },
+        "nm_044": { n: "夢幻之島冰石高崙", lv: 39, s: "L", beh: "被動", race: "高崙", e: "water", hp: 573, ac: -31, mr: 7, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 2.5, dmg: [5, 15], db: 24, hit: 24 },
+        "nm_045": { n: "夢幻之島大鬼火", lv: 40, s: "S", beh: "主動", race: "鬼火", e: "earth", hp: 360, ac: -33, mr: 35, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 2, dmg: [2, 50], db: 25, hit: 28 },
+        "nm_046": { n: "冰人", lv: 30, s: "L", beh: "被動", race: "元素", elem: true, e: "water", hp: 300, ac: -20, mr: 21, exp: 901, goldMin: 143, goldMax: 324, atkSpd: 2, dmg: [2, 40], db: 21, hit: 15 },
         "batus": { n: "巴土瑟", lv: 43, s: "S", beh: "主動", race: "四色", boss: true, e: "none", hp: 8000, ac: -32, mr: 80, exp: 18500, goldMin: 1500, goldMax: 3000, atkSpd: 2, dmg: [3, 45], db: 62, hit: 55, mag: { skn: "地裂術", cd: 70, dmg: [3, 80], db: 183, ele: "earth" } },
         "casper": { n: "卡士柏", lv: 44, s: "S", beh: "主動", race: "四色", boss: true, e: "none", hp: 8000, ac: -32, mr: 80, exp: 19370, goldMin: 1500, goldMax: 3000, atkSpd: 2, dmg: [3, 70], db: 32, hit: 56, mag: { skn: "燃燒的火球", cd: 60, dmg: [2, 100], db: 196, ele: "fire" } },
         "marcus": { n: "馬庫爾", lv: 45, s: "S", beh: "主動", race: "四色", boss: true, e: "none", hp: 8000, ac: -32, mr: 80, exp: 20260, goldMin: 1500, goldMax: 3000, atkSpd: 2, dmg: [1, 120], db: 45, hit: 56, mag: { skn: "光箭", cd: 30, dmg: [1, 120], db: 90, ele: "none" } },
@@ -1142,7 +1092,7 @@ const DB = {
         "fafurion": { n: "法利昂", lv: 93, s: "L", beh: "主動", race: "龍", boss: true, e: "water", hp: 120000, ac: -80, mr: 150, exp: 94000, goldMin: 18236, goldMax: 185248, atkSpd: 2, dmg: [2, 350], db: 265, hit: 95, mag: { skn: "巨水炮", cd: 50, dmg: [3, 100], db: 250, ele: "water" }, mag2: { skn: "寒冰噴吐", cd: 70, chance: 0.3, dmg: [4, 100], db: 399, ele: "water", sec: { type: "freeze", pbase: 200 } }, mag3: { skn: "冰裂術", cd: 70, dmg: [1, 100], db: 200, ele: "water", ext_freeze: 666 } },
         "valakas": { n: "巴拉卡斯", lv: 95, s: "L", beh: "主動", race: "龍", boss: true, e: "fire", hp: 150000, ac: -99, mr: 200, exp: 100000, goldMin: 20236, goldMax: 365248, atkSpd: 4, dmg: [3, 350], db: 565, hit: 99, mag: { skn: "火牢", cd: 50, chance: 0.1, type: "burn", d: 200, tick: 3, dur: 21 }, mag2: { skn: "流星雨", cd: 100, dmg: [5, 100], db: 560, ele: "fire", sec: { type: "scald", tick: 3, d: 100, dur: 15, pbase: 200 } }, mag3: { skn: "火焰噴吐", cd: 170, dmg: [2, 100], db: 1200, ele: "fire" } },
         "nm_035": { n: "牧羊犬", lv: 5, s: "S", beh: "被動", race: "動物", e: "earth", hp: 30, ac: 10, mr: 30, exp: 26, goldMin: 13, goldMax: 36, atkSpd: 2, dmg: [1, 5], db: 0, hit: 0 },
-        "nm_036": { n: "冰人", lv: 40, s: "S", beh: "主動", race: "亞人", e: "water", hp: 600, ac: -30, mr: 30, exp: 1601, goldMin: 160, goldMax: 280, atkSpd: 2, dmg: [2, 20], db: 40, hit: 29 },
+        "nm_036": { n: "夢幻之島冰人", lv: 38, s: "L", beh: "被動", race: "元素", elem: true, e: "water", hp: 350, ac: -30, mr: 21, exp: 1450, goldMin: 243, goldMax: 364, atkSpd: 2, dmg: [2, 40], db: 40, hit: 29 },
         "sema": { n: "西瑪", lv: 42, s: "S", boss: true, race: "四色", e: "none", hp: 8000, ac: -32, mr: 80, exp: 17650, goldMin: 1500, goldMax: 3000, atkSpd: 2.0, dmg: [4, 31], db: 62, hit: 55, mag: { skn: "極光雷電", sk: 'thunder', cd: 50, dmg: [2, 80], db: 182, ele: 'wind' } },
     },
 	
@@ -1389,6 +1339,7 @@ const DB = {
 
     maps: {
         "training": ["orc", "goblin", "orc_archer", "gremlin"],
+        "dream_island": ["nm_038", "nm_039", "nm_040", "nm_036", "nm_041", "nm_042", "nm_043", "nm_044", "nm_023", "nm_024", "nm_045", "nm_028", "nm_029", "nm_030", "nm_031", "nm_032", "nm_037"],
         "silver_knight": ["orc", "goblin", "orc_archer", "gremlin", "侏儒", "nm_003", "zombie", "fighter", "ice_wolf", "wolf", "gnome_warrior", "skeleton", "orc_mage", "stone_golem", "hobgoblin", "b_knight", "ghoul", "sparto", "lycan", "dragon_turtle"],
         "talking_island": ["orc", "goblin", "orc_archer", "gremlin", "侏儒", "nm_035", "nm_003", "doberman", "zombie", "floating_eye", "fighter", "wolf", "skeleton", "stone_golem", "spider"],
         "zone_01": ["orc", "orc_archer", "nm_002", "nm_003", "侏儒", "fighter", "zombie", "wolf", "gandi_orc", "orc_mage", "rova_orc", "stone_golem", "atuba_orc", "duda_orc", "neruga_orc", "nm_007", "nm_009"],
@@ -1406,7 +1357,7 @@ const DB = {
         "zone_02": ["侏儒", "nm_005", "nm_004", "zombie", "ice_wolf", "gnome_warrior", "bear", "troglodyte", "ghoul", "nm_012", "nm_014", "nm_015", "nm_019", "nm_020", "nm_021"],
         "zone_03": ["nm_012", "nm_014", "nm_015", "nm_017", "nm_019", "nm_020", "nm_021", "nm_022"],
         "zone_04": ["zombie", "ghoul", "nm_014", "nm_015", "nm_021"],
-        "zone_05": ["nm_004", "nm_012", "nm_014", "nm_036", "nm_015", "nm_017", "nm_019", "nm_020", "nm_022"],
+        "zone_05": ["nm_004", "nm_012", "nm_014", "nm_046", "nm_015", "nm_017", "nm_019", "nm_020", "nm_022"],
         "zone_06": ["orc", "orc_archer", "zombie", "fighter", "skeleton", "skel_archer", "ghoul", "sparto"],
         "zone_07": ["zombie", "skeleton", "skel_archer", "skel_spear", "spider", "ghoul", "sparto", "ungoliant", "ogre"],
         "zone_08": ["zombie", "skeleton", "skel_archer", "stone_golem", "ghoul", "sparto", "ungoliant", "ogre", "sema", "batus", "casper", "marcus"],
@@ -1472,6 +1423,17 @@ const DB = {
     // ===== 怪物專屬掉落表（依「怪物掉落資料.md」）=====
     // 格式：怪物顯示名稱: [[物品ID, 掉落機率(%)], ...]  每樣獨立判定一次
     const MOB_DROPS = {
+        '夢幻之島蘑菇': [['potion_haste',1], ['scroll_weapon',1], ['scroll_armor',2], ['potion_blue',1]],
+        '夢幻之島鬼火': [['scroll_weapon',1], ['scroll_armor',2], ['scroll_poly',1]],
+        '夢幻之島火蜥蜴': [['wpn_2hsword',1], ['wpn_giantaxe',1], ['scroll_weapon',1], ['scroll_armor',2], ['bk_fire_storm',0.01]],
+        '夢幻之島冰人': [['potion_haste',1], ['scroll_weapon',1], ['scroll_armor',2], ['potion_blue',1]],
+        '夢幻之島殺人蜂': [['scroll_weapon',1], ['scroll_armor',2]],
+        '夢幻之島暴走兔': [['scroll_weapon',1], ['scroll_armor',2]],
+        '夢幻之島火炎蛋': [['scroll_weapon',1], ['scroll_armor',2], ['bk_holy_light',0.5], ['scroll_poly',1]],
+        '夢幻之島冰石高崙': [['wpn_silveraxe',1], ['scroll_weapon',1], ['scroll_armor',2], ['scroll_revive',1], ['bk_elf_soul',0.1]],
+        '夢幻之島大鬼火': [['potion_haste',1], ['scroll_weapon',1], ['scroll_armor',2], ['potion_blue',1]],
+        '夢魘': [['wpn_2hsword',3], ['potion_haste',1], ['scroll_weapon',5], ['scroll_armor',10], ['potion_blue',1], ['panacea_wis',1], ['bk_elf_triple',0.1]],
+        '冰人': [['wpn_battleaxe',1], ['potion_haste',1], ['new_item_150',1], ['potion_blue',1], ['new_item_195',1]],
         '不死鳥': [['wpn_katana',5], ['wpn_siruge',1], ['amr_plate',5], ['arm_88',0.1], ['arm_63',10], ['acc_117',0.01], ['amu_str',0.1], ['acc_120',0.1], ['acc_128',1], ['acc_129',1], ['acc_130',0.5], ['acc_131',0.5], ['potion_haste',1], ['scroll_weapon',10], ['scroll_armor',20], ['scroll_acc',1], ['new_item_159',0.1], ['bk_sleep_mist',1], ['bk_holy_barrier',0.1], ['bk_meteor',0.05], ['potion_blue',1], ['bk_fire_storm',0.5], ['bk_elf_dancefire',1], ['bk_blaze',1]],
         '亞力安': [['potion_haste',1], ['scroll_weapon',1], ['scroll_armor',2], ['scroll_acc',0.01], ['bk_slow',0.5], ['bk_mummy_curse',0.5], ['bk_heal2',0.1], ['bk_holy_light',0.1], ['bk_haste_spell',0.5], ['bk_earthquake',0.1], ['bk_rock_prison',0.5], ['bk_greater_haste',0.1], ['bk_quake',0.005], ['bk_elf_groundtrap',0.1]],
         '人形殭屍': [['bk_vampire',0.1], ['bk_dark_shadow',0.1]],
@@ -1492,7 +1454,7 @@ const DB = {
         '哈維': [['arm_62',0.5], ['new_item_150',1], ['bk_haste_spell',0.5], ['bk_holy_dash',0.05], ['potion_blue',1], ['bk_greater_haste',0.01], ['new_item_195',1], ['bk_elf_stormeye',0.001]],
         '哥布林': [['wpn_9',1], ['wpn_10',1], ['arm_42',5], ['bot_short',3], ['potion_heal',3]],
         '地獄犬': [['wpn_witchwand',0.5], ['scroll_acc',0.01], ['new_item_150',1], ['new_item_157',5], ['new_item_158',0.5], ['new_item_159',0.1], ['bk_fireball',0.5], ['bk_break',0.5], ['bk_holy_barrier',0.001], ['new_item_195',1]],
-        '地精靈王': [['arm_63',3], ['potion_haste',1], ['scroll_weapon',2], ['scroll_armor',5], ['scroll_acc',0.01], ['potion_blue',1]],
+        '地精靈王': [['arm_63',5], ['potion_haste',1], ['scroll_weapon',5], ['scroll_armor',10], ['scroll_revive',1], ['potion_blue',1], ['panacea_con',1]],
         '地靈': [['wpn_10',3], ['bot_short',1], ['new_item_179',50]],
         '夏洛伯': [['bk_slow',0.1], ['bk_earthquake',0.01], ['scroll_acc',0.001], ['new_item_144',1]],
         '多眼怪': [['scroll_weapon',1], ['new_item_160',5], ['new_item_161',0.5], ['new_item_162',0.1], ['bk_mummy_curse',0.5], ['bk_cancel',0.05], ['bk_elf_release',0.1], ['bk_weaken',0.1], ['bk_disease',0.1], ['bk_elf_triple',0.01]],
@@ -1532,7 +1494,7 @@ const DB = {
         '死亡騎士': [['wpn_katana',5], ['wpn_2hsword',10], ['wpn_33',1], ['amr_plate',5], ['arm_88',0.1], ['glv_glove',10], ['glv_dk',1], ['amr_dk',1], ['bot_dk',1], ['hlm_dk',1], ['acc_117',1], ['amu_str',0.1], ['acc_128',0.5], ['acc_129',0.5], ['acc_130',0.1], ['acc_131',0.1], ['potion_haste',1], ['scroll_weapon',10], ['scroll_armor',20], ['scroll_acc',1], ['new_item_150',1], ['new_item_151',5], ['new_item_152',0.5], ['new_item_153',0.1], ['bk_zombie',3], ['bk_tornado',0.5], ['bk_resurrection',0.1], ['bk_disease',3], ['bk_solid_shield',1], ['bk_blaze',1]],
         '死神': [['wpn_16',1], ['wpn_giantaxe',0.1], ['wpn_flaming_angel',0.001], ['arm_61',0.5], ['scroll_weapon',1], ['scroll_armor',2], ['scroll_acc',0.01], ['potion_blue',1], ['bk_elf_stormshot',0.01], ['bk_disease',0.1]],
         '毒蠍': [['arm_46',0.01], ['potion_haste',1], ['bk_thunder',0.01], ['bk_cancel',0.01], ['bk_rock_prison',0.5], ['bk_quake',0.001]],
-        '水精靈王': [['arm_63',3], ['potion_haste',1], ['scroll_weapon',2], ['scroll_armor',5], ['scroll_acc',0.01], ['potion_blue',1]],
+        '水精靈王': [['arm_63',5], ['potion_haste',1], ['scroll_weapon',5], ['scroll_armor',10], ['scroll_revive',1], ['potion_blue',1], ['panacea_int',1]],
         '污染的潘': [['new_item_163',100]],
 		'污染的安特': [['new_item_141',1], ['new_item_237',100]],
         '法利昂': [['wpn_katana',10], ['wpn_siruge',5], ['amr_plate',10], ['arm_88',1], ['glv_glove',20], ['arm_80',0.1], ['acc_116',0.1], ['acc_117',0.1], ['acc_120',1], ['acc_127',5], ['acc_128',5], ['acc_129',5], ['blt_body',1], ['acc_130',1], ['acc_131',1], ['potion_haste',1], ['scroll_weapon',100], ['scroll_armor',100], ['scroll_acc',50], ['new_item_150',1], ['new_item_151',50], ['new_item_152',5], ['new_item_153',1], ['new_item_160',50], ['new_item_161',5], ['new_item_162',1], ['bk_slow',10], ['bk_holy_light',10], ['bk_regen',5], ['bk_summon',2], ['bk_blizzard',1], ['bk_resurrection',1], ['new_item_190',100], ['potion_blue',1], ['bk_elf_eleres',1]],
@@ -1542,7 +1504,7 @@ const DB = {
         '火炎蛋': [['scroll_weapon',1], ['scroll_armor',2], ['bk_fireball',0.1], ['bk_holy_light',0.1], ['scroll_poly',1], ['new_item_192',0.01], ['potion_blue',1]],
         '火焰弓箭手': [['wpn_32',0.1], ['arm_42',2], ['arm_67',4], ['arm_90',1], ['bk_dex_up',0.05], ['bk_slow',0.1], ['new_item_192',0.01]],
         '火焰戰士': [['wpn_longsword',1], ['arm_42',2], ['arm_62',1], ['arm_105',3], ['potion_haste',1], ['new_item_192',0.01]],
-        '火精靈王': [['arm_63',3], ['potion_haste',1], ['scroll_weapon',2], ['scroll_armor',5], ['scroll_acc',0.01], ['potion_blue',1]],
+        '火精靈王': [['arm_63',5], ['potion_haste',1], ['scroll_weapon',5], ['scroll_armor',10], ['scroll_revive',1], ['potion_blue',1], ['panacea_str',1]],
         '火蜥蜴': [['potion_haste',1], ['new_item_155',0.5], ['new_item_158',0.5], ['new_item_192',0.01], ['bk_fire_storm',0.001], ['bk_elf_magicerase',0.01], ['bk_elf_stormeye',0.01], ['bk_shock_stun',0.01]],
         '烈炎獸': [['scroll_weapon',1], ['scroll_armor',2], ['bk_holy_barrier',0.002], ['scroll_acc',0.01], ['new_item_192',0.01], ['bk_elf_magicerase',0.1], ['bk_shock_stun',0.05]],
         '熔岩高崙': [['wpn_2hsword',0.5], ['wpn_18',1], ['wpn_giantaxe',0.5], ['bk_slow',0.5], ['bk_str_up',0.05], ['scroll_acc',0.01], ['new_item_192',0.01], ['bk_elf_triple',0.01]],
@@ -1552,7 +1514,7 @@ const DB = {
         '狼': [['wpn_5',1], ['new_item_195',1], ['new_item_179',100]],
         '狼人': [['wpn_longsword',0.1], ['wpn_2',1], ['wpn_10',3], ['wpn_13',2], ['arm_66',0.5], ['arm_103',1], ['bot_short',0.5], ['bk_dex_up',0.01], ['bk_vampire',0.05]],
         '獨眼巨人': [['arm_62',1], ['arm_47',0.01], ['scroll_weapon',1], ['scroll_armor',2], ['scroll_acc',0.01], ['bk_str_up',0.05], ['bk_summon',0.002], ['bk_rock_prison',0.5], ['bk_quake',0.003], ['bk_elf_groundtrap',0.1], ['bk_elf_earthbless',0.01], ['bk_weaken',0.1], ['bk_seal',0.05], ['new_item_227',0.01]],
-        '獨角獸': [['wpn_18',2], ['scroll_weapon',2], ['scroll_armor',5], ['scroll_acc',0.01], ['scroll_poly',1]],
+        '獨角獸': [['wpn_18',3], ['scroll_weapon',5], ['scroll_armor',10], ['scroll_poly',1], ['panacea_cha',1]],
         '甘地妖魔': [['potion_heal',1], ['new_item_148',1], ['new_item_150',1], ['new_item_201',1]],
         '石頭高崙': [['wpn_alien',3], ['wpn_1',5], ['wpn_10',5], ['wpn_13',1], ['new_item_150',1], ['new_item_159',0.05], ['new_item_164',1], ['potion_blue',1], ['bk_rock_prison',0.5], ['new_item_207',0.1]],
         '穴居人': [['wpn_battleaxe',1], ['wpn_giantaxe',0.1], ['arm_61',0.5], ['scroll_acc',0.001]],
@@ -1576,15 +1538,15 @@ const DB = {
         '邪惡蜥蜴': [['scroll_weapon',1], ['scroll_armor',2], ['scroll_acc',0.01], ['new_item_151',5], ['new_item_152',0.5], ['new_item_153',0.1], ['bk_slow',0.5], ['bk_heal2',0.2], ['bk_holy_light',0.1], ['bk_cancel',0.02], ['bk_earthquake',0.02], ['bk_rock_prison',0.5], ['bk_quake',0.005], ['bk_elf_release',0.05], ['new_item_232',0.01]],
         '都達瑪拉妖魔': [['arm_104',3], ['arm_42',5], ['acc_123',0.01], ['potion_haste',1], ['new_item_147',1], ['new_item_150',1], ['new_item_158',0.5], ['new_item_199',1], ['scroll_acc',0.001]],
         '鋼鐵高崙': [['scroll_weapon',1], ['scroll_armor',2], ['bk_str_up',0.05], ['new_item_164',1], ['new_item_180',100], ['potion_blue',1], ['bk_elf_soul',0.001], ['bk_elf_steelguard',0.001], ['bk_weaken',0.1], ['item_ancientkey',1]],
-        '鎧甲守衛': [['arm_60',1], ['potion_haste',1], ['scroll_weapon',1], ['scroll_armor',2], ['bk_spike_armor',0.002]],
+        '夢幻之島鎧甲守衛': [['arm_60',1], ['potion_haste',1], ['scroll_weapon',1], ['scroll_armor',2], ['bk_spike_armor',0.05]],
         '長老': [['arm_87',0.5], ['new_item_150',1], ['bk_thunder',0.1], ['bk_heal2',0.5], ['scroll_acc',0.01], ['potion_blue',1], ['new_item_234',0.1]],
-        '閃電球': [['arm_45',0.05], ['scroll_weapon',1], ['scroll_armor',2], ['scroll_acc',0.01], ['bk_thunder_storm',0.001]],
+        '夢幻之島閃電球': [['arm_45',0.1], ['scroll_weapon',1], ['scroll_armor',2], ['bk_thunder_storm',0.05]],
         '阿吐巴妖魔': [['wpn_damascus',0.1], ['arm_60',0.5], ['arm_64',3], ['arm_104',3], ['arm_42',5], ['acc_123',0.01], ['new_item_145',1], ['new_item_157',5], ['new_item_202',1]],
         '阿西塔基奧': [['potion_haste',1], ['scroll_weapon',1], ['scroll_armor',2], ['scroll_acc',0.01], ['bk_fireball',0.5], ['bk_dex_up',0.1], ['bk_str_up',0.05], ['bk_haste_spell',0.1], ['bk_earthquake',0.1], ['new_item_192',0.01], ['new_item_194',1]],
         '阿魯巴': [['wpn_18',2], ['bk_str_up',0.05], ['bk_haste_spell',0.5], ['bk_earthquake',0.1], ['bk_rock_prison',0.5], ['bk_greater_haste',0.1], ['bk_quake',0.005]],
         '雪人': [['bk_elf_release',0.1], ['scroll_acc',0.01]],
         '雪怪': [['wpn_18',1], ['scroll_acc',0.01], ['new_item_195',1]],
-        '風精靈王': [['arm_63',3], ['potion_haste',1], ['scroll_weapon',2], ['scroll_armor',5], ['scroll_acc',0.01], ['potion_blue',1]],
+        '風精靈王': [['arm_63',5], ['potion_haste',1], ['scroll_weapon',5], ['scroll_armor',10], ['scroll_revive',1], ['potion_blue',1], ['panacea_dex',1]],
         '飛龍': [['potion_haste',1], ['scroll_weapon',10], ['scroll_armor',20], ['scroll_acc',1], ['new_item_150',1], ['new_item_151',5], ['new_item_152',0.5], ['new_item_153',0.1], ['new_item_154',5], ['new_item_155',0.5], ['new_item_156',0.1], ['new_item_157',5], ['new_item_158',0.5], ['new_item_159',0.1], ['new_item_160',5], ['new_item_161',0.5], ['new_item_162',0.1], ['bk_holy_dash',1], ['potion_blue',1], ['bk_quake',1], ['bk_elf_magicerase',1], ['bk_elf_stormeye',1], ['bk_elf_triple',1]],
         '食人妖精': [['wpn_battleaxe',3], ['wpn_giantaxe',1], ['arm_61',0.6], ['scroll_weapon',0.2], ['scroll_armor',0.5], ['bk_fireball',0.1], ['bk_break',0.5], ['bk_elf_release',0.05], ['new_item_217',0.1], ['bk_blaze',0.01]],
         '食人妖精王': [['wpn_battleaxe',3], ['wpn_10',2], ['wpn_giantaxe',0.5], ['wpn_berserker',0.02], ['arm_61',0.5], ['arm_47',0.05], ['scroll_weapon',1], ['scroll_armor',1.5], ['new_item_158',0.5], ['bk_fireball',0.5], ['bk_break',0.5], ['bk_holy_light',0.1], ['potion_blue',1], ['bk_disease',0.1], ['bk_shock_stun',0.01]],
@@ -1658,7 +1620,7 @@ function flushAwaySummary() {
 
 let player = {
     cls: null, name: null, lv: 1, exp: 0, gold: 1000, hp: 0, mhp: 0, mp: 0, mmp: 0, blessings: {},
-    base: { str:0, dex:0, con:0, int:0, wis:0, cha:8 }, bonus: 0, alloc: { str:0, dex:0, con:0, int:0, wis:0, cha:0 }, junkPrefs: {}, bloodPledge: null, magicShieldCd: 0,
+    base: { str:0, dex:0, con:0, int:0, wis:0, cha:8 }, bonus: 0, alloc: { str:0, dex:0, con:0, int:0, wis:0, cha:0 }, panacea: { str:0, dex:0, con:0, int:0, wis:0, cha:0 }, panaceaUsed: 0, junkPrefs: {}, bloodPledge: null, magicShieldCd: 0,
     inv: [], eq: { wpn: null, arrow: null, helm: null, armor: null, shield: null, cloak: null, tshirt: null, gloves: null, boots: null, ring1: null, ring2: null, amulet: null, belt: null },
     skills: [], buffs: { haste: 0, brave: 0, blue: 0, cautious: 0, elfcookie: 0, poly: 0, shield: 0, sk_magic_shield: 0 }, poly: null,
     summon: null, manualCd: {}, elfEle: null, hot: null,
@@ -1904,8 +1866,9 @@ function calcStats() {
     }
     player.grantedSkills = [];
     // ===== Phase 0：基礎屬性 + 衍生欄位歸零（依基本設定，起始值0；AC起始10）=====
-    d.str = b.str + a.str; d.dex = b.dex + a.dex; d.con = b.con + a.con; d.int = b.int + a.int; d.wis = b.wis + a.wis;
-    d.cha = Math.min(30, (b.cha || 0) + (a.cha || 0));   // 魅力：第六屬性，最高 30
+    let pn = player.panacea || {};
+    d.str = b.str + a.str + (pn.str||0); d.dex = b.dex + a.dex + (pn.dex||0); d.con = b.con + a.con + (pn.con||0); d.int = b.int + a.int + (pn.int||0); d.wis = b.wis + a.wis + (pn.wis||0);
+    d.cha = Math.min(30, (b.cha || 0) + (a.cha || 0) + (pn.cha||0));   // 魅力：第六屬性，最高 30
 
     d.ac = 10; d.er = 0; d.dr = 0;
     d.meleeDmg = 0; d.meleeHit = 0; d.meleeCrit = 0;
@@ -3544,7 +3507,7 @@ function revive() {
     if (player.cls === 'mage') startMap = 'town_talking';
     else if (player.cls === 'elf') startMap = 'town_elf';
     
-    document.getElementById('map-select').value = startMap;
+    setMapSelectors(startMap);
     
     calcStats();
     changeMap(true);
@@ -4377,7 +4340,7 @@ function useItem(u, silent = false) {
     if (item.id === 'scroll_revive') { if(!silent) logSys(`復活卷軸無法從道具欄使用，死亡時可於畫面下方點選『原地復活』。`); return; }
     let d = DB.items[item.id];
     
-    if (d.type === 'pot' || d.eff === 'poly' || d.eff === 'reset' || d.eff === 'magicbarrier' || d.eff === 'teleport_scroll') {   // 變形卷軸(eff:poly)、回憶蠟燭(eff:reset)、魔法卷軸(eff:magicbarrier)、瞬間移動卷軸(eff:teleport_scroll)亦走此消耗品分支
+    if (d.type === 'pot' || d.eff === 'poly' || d.eff === 'reset' || d.eff === 'magicbarrier' || d.eff === 'teleport_scroll' || d.eff === 'panacea') {   // 變形卷軸(eff:poly)、回憶蠟燭(eff:reset)、魔法卷軸(eff:magicbarrier)、瞬間移動卷軸(eff:teleport_scroll)亦走此消耗品分支
         // 職業限定檢查（如慎重藥水=法師、勇敢藥水=騎士、精靈餅乾=妖精）
         if (d.req && d.req !== 'all' && !d.req.includes(player.cls)) {
             if (!silent) logSys(`無法使用 ${d.n}，職業不符。`);
@@ -4468,6 +4431,17 @@ function useItem(u, silent = false) {
             doTeleport(forceBoss);
             if(!silent) logSys(`使用瞬間移動卷軸，當前的怪物消失了${forceBoss ? '；傳送控制戒指引動了強敵的氣息……' : ''}。`);
             // 落到下方 consume(item)，消耗一張卷軸
+        } else if (d.eff === 'panacea') {
+            const STAT_CN = { str:'力量', dex:'敏捷', con:'體質', int:'智力', wis:'精神', cha:'魅力' };
+            let st = d.pstat, cap = (st === 'cha') ? 30 : 60;
+            if (d.plv && player.lv < d.plv) { if(!silent) logSys(`等級不足，需要等級 ${d.plv} 才能使用 ${d.n}。`); return; }
+            if ((player.panaceaUsed || 0) >= 10) { if(!silent) logSys(`萬能藥最多只能使用 10 瓶，使用回憶蠟燭後可重新使用。`); return; }
+            if ((player.d[st] || 0) >= cap) { if(!silent) logSys(`${STAT_CN[st]}已達上限（${cap}），無法再使用 ${d.n}。`); return; }
+            if (!player.panacea) player.panacea = { str:0, dex:0, con:0, int:0, wis:0, cha:0 };
+            player.panacea[st] = (player.panacea[st] || 0) + 1;
+            player.panaceaUsed = (player.panaceaUsed || 0) + 1;
+            if(!silent) logSys(`使用了 ${d.n}，${STAT_CN[st]} 永久 +1！（萬能藥已使用 ${player.panaceaUsed}/10）`);
+            // 落到下方 consume(item) + calcStats()，由 useItem 結尾 updateUI 刷新
         } else if (d.eff === 'reset') {
             if(confirm("確定重置所有配點？")) resetStatsCandle();
             else return;
@@ -5757,11 +5731,85 @@ function switchTab(t, btn) {
     document.getElementById(`tab-${t}`).classList.remove('hidden');
 }
 
+// ===== 地圖分類選單（村莊／野外／地監／特殊） =====
+const MAP_CATEGORIES = {
+    village: [
+        {v:'town_silver_knight',t:'銀騎士村'}, {v:'town_elf',t:'妖精森林'}, {v:'town_talking',t:'說話之島'},
+        {v:'town_gludio',t:'燃柳村'}, {v:'town_giran',t:'奇岩'}, {v:'town_heine',t:'海音'},
+        {v:'town_oren',t:'歐瑞村莊'}, {v:'town_ivory_tower',t:'象牙塔'}, {v:'town_witon',t:'威頓村'}
+    ],
+    wild: [
+        {v:'silver_knight',t:'銀騎士地區'}, {v:'talking_island',t:'說話之島周邊'}, {v:'zone_01',t:'妖精森林周邊'},
+        {v:'talking_island_port',t:'說話之島港口'}, {v:'elf_forest',t:'妖魔森林'}, {v:'gludio',t:'古魯丁'},
+        {v:'windwood',t:'風木'}, {v:'desert',t:'沙漠'}, {v:'kent',t:'肯特'}, {v:'dragon_valley',t:'龍之谷'},
+        {v:'fire_dragon',t:'火龍窟'}, {v:'giran',t:'奇岩'}, {v:'heine',t:'海音'}, {v:'mirror_forest',t:'鏡子森林'},
+        {v:'zone_02',t:'歐瑞'}, {v:'zone_03',t:'歐瑞雪原'}, {v:'zone_04',t:'艾爾摩激戰地'}, {v:'zone_05',t:'國境要塞'}
+    ],
+    dungeon: [
+        {v:'zone_06',t:'古魯丁地監1樓'},{v:'zone_07',t:'古魯丁地監2樓'},{v:'zone_08',t:'古魯丁地監3樓'},{v:'zone_09',t:'古魯丁地監4樓'},{v:'zone_10',t:'古魯丁地監5樓'},{v:'zone_11',t:'古魯丁地監6樓'},{v:'zone_12',t:'古魯丁地監7樓'},
+        {v:'zone_13',t:'說話之島地監1樓'},{v:'zone_14',t:'說話之島地監2樓'},
+        {v:'zone_15',t:'眠龍洞穴1樓'},{v:'zone_16',t:'眠龍洞穴2樓'},{v:'zone_17',t:'眠龍洞穴3樓'},
+        {v:'zone_18',t:'奇岩地監1樓'},{v:'zone_19',t:'奇岩地監2樓'},{v:'zone_20',t:'奇岩地監3樓'},{v:'zone_21',t:'奇岩地監4樓'},
+        {v:'zone_22',t:'沙漠地監1樓'},{v:'zone_23',t:'沙漠地監2樓'},{v:'zone_24',t:'沙漠地監3樓'},{v:'zone_25',t:'沙漠地監4樓'},
+        {v:'zone_26',t:'龍之谷地監1樓'},{v:'zone_27',t:'龍之谷地監2樓'},{v:'zone_28',t:'龍之谷地監3樓'},{v:'zone_29',t:'龍之谷地監4樓'},{v:'zone_30',t:'龍之谷地監5樓'},{v:'zone_31',t:'龍之谷地監6樓'},
+        {v:'zone_32',t:'螞蟻洞窟1樓'},{v:'zone_33',t:'螞蟻洞窟2樓'},
+        {v:'zone_34',t:'地下通道1樓'},{v:'zone_35',t:'地下通道2樓'},{v:'zone_36',t:'地下通道3樓'},
+        {v:'eva_kingdom',t:'伊娃王國'},
+        {v:'zone_37',t:'象牙塔4樓'},{v:'zone_38',t:'象牙塔5樓'},{v:'zone_39',t:'象牙塔6樓'},{v:'zone_40',t:'象牙塔7樓'},{v:'zone_41',t:'象牙塔8樓'}
+    ],
+    special: [
+        {v:'training',t:'新兵修練場'}, {v:'dream_island',t:'夢幻之島'},
+        {v:'antaras_lair',t:'安塔瑞斯棲息地',c:'#fb923c'}, {v:'fafurion_lair',t:'法利昂巢穴',c:'#60a5fa'}, {v:'valakas_lair',t:'巴拉卡斯巢穴',c:'#f87171'}
+    ]
+};
+function mapCategoryOf(v) {
+    for (let cat in MAP_CATEGORIES) { if (MAP_CATEGORIES[cat].some(m => m.v === v)) return cat; }
+    return 'wild';
+}
+function populateMapSelect(cat) {
+    let sel = document.getElementById('map-select'); if (!sel) return;
+    sel.innerHTML = '';
+    (MAP_CATEGORIES[cat] || []).forEach(m => {
+        let o = document.createElement('option');
+        o.value = m.v; o.textContent = m.t; if (m.c) o.style.color = m.c;
+        sel.appendChild(o);
+    });
+}
+function onMapCategoryChange() {
+    // 僅切換右側清單內容，不立即移動；玩家於右側清單點選後才會 changeMap()
+    populateMapSelect(document.getElementById('map-category').value);
+}
+function setMapSelectors(mapKey) {
+    // 將「分類選單 + 地圖選單」同步到指定地圖
+    let cat = mapCategoryOf(mapKey);
+    let catSel = document.getElementById('map-category'); if (catSel) catSel.value = cat;
+    populateMapSelect(cat);
+    let sel = document.getElementById('map-select'); if (sel) sel.value = mapKey;
+}
+function syncMapSelectors() { setMapSelectors(mapState.current); }
+function getHomeTown() {
+    // 血盟優先回到盟主所在村莊；否則回該職業創角起始村莊
+    if (player.bloodPledge === 'esti') return 'town_heine';
+    if (player.bloodPledge === 'tros') return 'town_oren';
+    if (player.cls === 'mage') return 'town_talking';
+    if (player.cls === 'elf') return 'town_elf';
+    return 'town_silver_knight';
+}
+function returnToTown() {
+    // 與切換地圖相同的受控限制（石化／麻痺／冰凍／暈眩時無法回村）
+    if (player.statuses && (player.statuses.stone > 0 || player.statuses.paralyze > 0 || player.statuses.freeze > 0 || player.statuses.stun > 0)) {
+        logSys('你目前無法行動（石化／麻痺／冰凍／暈眩），無法回村。');
+        return;
+    }
+    setMapSelectors(getHomeTown());
+    changeMap();   // 走既有切換流程（進入村莊：補滿 HP/MP、清狀態、渲染 NPC）
+}
+
 function changeMap(force) {
     // 行動限制狀態（石化／麻痺／冰凍／暈眩）時無法主動切換地圖；force=true 供復活、載入等內部流程略過
     if (!force && player.statuses &&
         (player.statuses.stone > 0 || player.statuses.paralyze > 0 || player.statuses.freeze > 0 || player.statuses.stun > 0)) {
-        document.getElementById('map-select').value = mapState.current;   // 還原選單為目前所在地圖
+        syncMapSelectors();   // 還原「分類選單 + 地圖選單」為目前所在地圖
         logSys('你目前無法行動（石化／麻痺／冰凍／暈眩），無法切換地圖。');
         return;
     }
@@ -5812,6 +5860,7 @@ function changeMap(force) {
         logSys(`--- 你走向了新的區域 ---`);
         renderMobs();
     }
+    syncMapSelectors();   // 切換完成後，同步分類選單與地圖選單為目前所在地圖
 }
 
 function renderTownNPCs(townId) {
@@ -6006,6 +6055,13 @@ function siegeComingSoon(label) {
 // 交出 1 張王族搜索狀，獲得（或刷新）盟主祝福，持續 8 小時
 function activateBlessing(key) {
     if (!BLESSING_DEFS[key]) return;
+    // 僅在「剩餘時間不到 4 小時」時才能消耗王族搜索狀刷新；剩餘超過 4 小時則不消耗、不刷新
+    let remainMs = ((player.blessings && player.blessings[key]) || 0) - Date.now();
+    if (remainMs >= 4 * 3600 * 1000) {
+        let h = Math.floor(remainMs / 3600000), m = Math.floor((remainMs % 3600000) / 60000);
+        alert(`「${BLESSING_DEFS[key].n}」剩餘時間還有 ${h} 小時 ${m} 分（超過 4 小時），尚無法刷新，不會消耗王族搜索狀。\n（剩餘不到 4 小時才能刷新）`);
+        return;
+    }
     let idx = player.inv.findIndex(i => i.id === 'new_item_241');
     if (idx === -1 || player.inv[idx].cnt <= 0) {
         alert('你沒有王族搜索狀，無法換取盟主的祝福。\n（擊敗血盟敵人可必定取得）');
@@ -6839,7 +6895,7 @@ function startGame() {
     if (player.cls === 'mage') startMap = 'town_talking';
     else if (player.cls === 'elf') startMap = 'town_elf';
     
-    document.getElementById('map-select').value = startMap;
+    setMapSelectors(startMap);
     changeMap(true);
     
     state.running = true;
@@ -6946,6 +7002,8 @@ function loadGame() {
         // 相容舊存檔：新增第六屬性 魅力(cha)，起始 8
         if(player.base && player.base.cha === undefined) player.base.cha = (createBase[player.cls] ? createBase[player.cls].cha : 8);
         if(player.alloc && player.alloc.cha === undefined) player.alloc.cha = 0;
+        if(!player.panacea) player.panacea = { str:0, dex:0, con:0, int:0, wis:0, cha:0 };
+        if(player.panaceaUsed === undefined) player.panaceaUsed = 0;
         // 相容舊存檔：單一 partner → partners 陣列
         if(player.partners === undefined) player.partners = (player.partner ? [player.partner] : []);
         // 相容舊存檔：返生術改為被動技能，清除先前施放殘留的無作用 buff；初始化復活卷軸冷卻
@@ -6976,7 +7034,7 @@ function loadGame() {
         if (player.cls === 'mage') startMap = 'town_talking';
         else if (player.cls === 'elf') startMap = 'town_elf';
         
-        document.getElementById('map-select').value = startMap;
+        setMapSelectors(startMap);
         
         calcStats();
         changeMap(true);
@@ -7066,6 +7124,7 @@ function resetStatsCandle() {
     // 還原為「創角時的初始狀態」：base = 純職業起始能力（不含創角分配）
     player.base = { str: b.str, dex: b.dex, con: b.con, int: b.int, wis: b.wis, cha: b.cha };
     player.alloc = { str:0, dex:0, con:0, int:0, wis:0, cha:0 };
+    player.panacea = { str:0, dex:0, con:0, int:0, wis:0, cha:0 }; player.panaceaUsed = 0;   // 回憶蠟燭同時清空萬能藥的加成與使用次數
     // 可重新分配的點數 = 創角可分配點數 + (等級-49) 升級點數
     player.bonus = b.pts + Math.max(0, player.lv - 49);
     // 重置點數時：自動賣出背包內所有項圈，並解除對應夥伴
