@@ -494,8 +494,8 @@ const DB = {
         "wpn_4": { n: "矛", type: "wpn", dmgS: 6, dmgL: 8, hit: 0, spd: 1.2, req: "all", safe: 6, p: 120, gachaWeight: 100 },
         "wpn_battleaxe": { n: "戰斧", type: "wpn", w2h: true, dmgS: 8, dmgL: 8, hit: 0, spd: 1.0, req: "knight,elf", safe: 6, p: 980, gachaWeight: 100 },
         "wpn_5": { n: "箭", type: "wpn", isArrow: true, dmgS: 6, dmgL: 5, hit: 0, p: 0, gachaWeight: 0 },
-        "wpn_6": { n: "巴迪須", type: "wpn", w2h: true, dmgS: 4, dmgL: 6, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 56, gachaWeight: 100 },
-        "wpn_7": { n: "柴刀", type: "wpn", w2h: true, dmgS: 4, dmgL: 11, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 252, gachaWeight: 100 },
+        "wpn_6": { n: "巴迪須", type: "wpn", w2h: true, dmgS: 4, dmgL: 6, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 56, gachaWeight: 100, eff: "pierce", pierceChance: 35 },
+        "wpn_7": { n: "柴刀", type: "wpn", w2h: true, dmgS: 4, dmgL: 11, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 252, gachaWeight: 100, eff: "pierce", pierceChance: 35 },
         "wpn_elfbow": { n: "精靈弓", type: "wpn", isBow: true, ranged: true, dmgS: 2, dmgL: 2, hit: 0, dmgBonus: 1, spd: 1.0, req: "all", safe: 6, p: 620, gachaWeight: 100 },
         "wpn_8": { n: "歐西斯弓", type: "wpn", isBow: true, ranged: true, dmgS: 2, dmgL: 2, hit: 0, dmgBonus: -1, spd: 1.0, req: "all", safe: 6, p: 30, gachaWeight: 100 },
         "wpn_9": { n: "闊劍", type: "wpn", dmgS: 4, dmgL: 6, hit: 0, spd: 1.1, req: "all", safe: 6, p: 490, gachaWeight: 100 },
@@ -503,14 +503,14 @@ const DB = {
         "wpn_dagger2": { n: "精靈匕首", type: "wpn", dmgS: 4, dmgL: 3, hit: 2, spd: 0.8, req: "all", safe: 6, p: 42, unBonus: true, gachaWeight: 100 },
         "wpn_dagger1": { n: "歐西斯匕首", type: "wpn", dmgS: 2, dmgL: 3, hit: 2, spd: 0.8, req: "all", safe: 6, p: 10, gachaWeight: 100 },
         "wpn_11": { n: "匕首", type: "wpn", dmgS: 4, dmgL: 2, hit: 2, spd: 0.8, req: "all", safe: 6, p: 10, gachaWeight: 100 },
-        "wpn_12": { n: "貝卡合金", type: "wpn", w2h: true, dmgS: 11, dmgL: 11, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 22400, eff: "pierce", twohanded: true, gachaWeight: 10 },
-        "wpn_halberd": { n: "法丘", type: "wpn", dmgS: 10, dmgL: 10, hit: 0, spd: 1.0, req: "knight,elf", safe: 6, p: 11200, unBonus: true, gachaWeight: 50 },
+        "wpn_12": { n: "貝卡合金", type: "wpn", w2h: true, dmgS: 11, dmgL: 11, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 22400, eff: "pierce", pierceChance: 100, twohanded: true, gachaWeight: 10 },
+        "wpn_halberd": { n: "法丘", type: "wpn", dmgS: 10, dmgL: 10, hit: 0, spd: 1.0, req: "knight,elf", safe: 6, p: 11200, unBonus: true, gachaWeight: 50, eff: "pierce", pierceChance: 40 },
         "wpn_13": { n: "弗萊爾", type: "wpn", dmgS: 6, dmgL: 4, hit: 0, spd: 1.3, req: "all", safe: 6, p: 56, gachaWeight: 100 },
-        "wpn_14": { n: "闊矛", type: "wpn", w2h: true, dmgS: 6, dmgL: 10, hit: 0, spd: 1.0, req: "knight,elf", safe: 6, p: 42, gachaWeight: 100 },
-        "wpn_15": { n: "吉薩", type: "wpn", w2h: true, dmgS: 6, dmgL: 8, hit: 0, spd: 1.0, req: "knight,elf", safe: 6, p: 280, gachaWeight: 100 },
-        "wpn_16": { n: "戟", type: "wpn", w2h: true, dmgS: 10, dmgL: 6, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 2800, gachaWeight: 50 },
+        "wpn_14": { n: "闊矛", type: "wpn", w2h: true, dmgS: 6, dmgL: 10, hit: 0, spd: 1.0, req: "knight,elf", safe: 6, p: 42, gachaWeight: 100, eff: "pierce", pierceChance: 60 },
+        "wpn_15": { n: "吉薩", type: "wpn", w2h: true, dmgS: 6, dmgL: 8, hit: 0, spd: 1.0, req: "knight,elf", safe: 6, p: 280, gachaWeight: 100, eff: "pierce", pierceChance: 70 },
+        "wpn_16": { n: "戟", type: "wpn", w2h: true, dmgS: 10, dmgL: 6, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 2800, gachaWeight: 50, eff: "pierce", pierceChance: 60 },
         "wpn_17": { n: "槍", type: "wpn", w2h: true, dmgS: 6, dmgL: 8, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 84, gachaWeight: 100 },
-        "wpn_18": { n: "露西錘", type: "wpn", w2h: true, dmgS: 9, dmgL: 11, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 14000, gachaWeight: 30 },
+        "wpn_18": { n: "露西錘", type: "wpn", w2h: true, dmgS: 9, dmgL: 11, hit: 0, spd: 1.0, req: "knight", safe: 6, p: 14000, gachaWeight: 30, eff: "pierce", pierceChance: 50 },
         "wpn_19": { n: "戰錘", type: "wpn", w2h: true, dmgS: 7, dmgL: 9, hit: 0, spd: 1.1, req: "knight,elf", safe: 6, p: 1400, gachaWeight: 100 },
         "wpn_20": { n: "流星錘", type: "wpn", dmgS: 9, dmgL: 10, hit: 0, spd: 1.3, req: "knight,elf", safe: 6, p: 4900, gachaWeight: 50 },
         "wpn_21": { n: "帕提森", type: "wpn", dmgS: 6, dmgL: 6, hit: 0, spd: 1.2, req: "knight,elf", safe: 6, p: 700, gachaWeight: 100 },
@@ -1100,6 +1100,8 @@ const DB = {
         "nm_044": { n: "夢幻之島冰石高崙", lv: 39, s: "L", beh: "被動", race: "高崙", e: "water", hp: 573, ac: -31, mr: 7, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 2.5, dmg: [5, 15], db: 24, hit: 24 },
         "nm_045": { n: "夢幻之島大鬼火", lv: 40, s: "S", beh: "主動", race: "鬼火", e: "earth", hp: 360, ac: -33, mr: 35, exp: 1520, goldMin: 153, goldMax: 244, atkSpd: 2, dmg: [2, 50], db: 25, hit: 28 },
         "nm_046": { n: "冰人", lv: 30, s: "L", beh: "被動", race: "元素", elem: true, e: "water", hp: 300, ac: -20, mr: 21, exp: 901, goldMin: 143, goldMax: 324, atkSpd: 2, dmg: [2, 40], db: 21, hit: 15 },
+        "ice_maid": { n: "冰之女王侍女", lv: 10, s: "S", beh: "主動", race: "元素", elem: true, e: "water", hp: 1000, ac: -35, mr: 60, exp: 0, goldMin: 0, goldMax: 0, atkSpd: 2, dmg: [1, 100], db: 10, hit: 29 },
+        "ice_queen": { n: "冰之女王", lv: 56, s: "S", beh: "主動", race: "元素", elem: true, boss: true, e: "water", hp: 13500, ac: -60, mr: 60, exp: 31370, goldMin: 10000, goldMax: 20000, atkSpd: 2, dmg: [1, 200], db: 105, hit: 69, mag: { skn: "冰雪暴", cd: 80, chance: 0.3, dmg: [5, 150], db: 99, ele: "water", sec: { type: "freeze", pbase: 200 } }, mag2: { skn: "寒冰吐息", cd: 130, type: "frost_breath", pbase: 200, dur: 8 }, mag3: { skn: "冰錐", cd: 50, dmg: [1, 300], db: 99, ele: "water" } },
         "batus": { n: "巴土瑟", lv: 43, s: "S", beh: "主動", race: "四色", boss: true, e: "none", hp: 8000, ac: -32, mr: 80, exp: 18500, goldMin: 1500, goldMax: 3000, atkSpd: 2, dmg: [3, 45], db: 62, hit: 55, mag: { skn: "地裂術", cd: 70, dmg: [3, 80], db: 183, ele: "earth" } },
         "casper": { n: "卡士柏", lv: 44, s: "S", beh: "主動", race: "四色", boss: true, e: "none", hp: 8000, ac: -32, mr: 80, exp: 19370, goldMin: 1500, goldMax: 3000, atkSpd: 2, dmg: [3, 70], db: 32, hit: 56, mag: { skn: "燃燒的火球", cd: 60, dmg: [2, 100], db: 196, ele: "fire" } },
         "marcus": { n: "馬庫爾", lv: 45, s: "S", beh: "主動", race: "四色", boss: true, e: "none", hp: 8000, ac: -32, mr: 80, exp: 20260, goldMin: 1500, goldMax: 3000, atkSpd: 2, dmg: [1, 120], db: 45, hit: 56, mag: { skn: "光箭", cd: 30, dmg: [1, 120], db: 90, ele: "none" } },
@@ -1398,6 +1400,9 @@ const DB = {
         "mirror_forest": ["doppelganger", "doppel_boss", "crabman", "croc", "dragon_turtle", "beholder", "spider", "ungoliant", "lamia"],
         "zone_02": ["侏儒", "nm_005", "nm_004", "zombie", "ice_wolf", "gnome_warrior", "bear", "troglodyte", "ghoul", "nm_012", "nm_014", "nm_015", "nm_019", "nm_020", "nm_021"],
         "zone_03": ["nm_012", "nm_014", "nm_015", "nm_017", "nm_019", "nm_020", "nm_021", "nm_022"],
+        "crystal_cave1": ["nm_002", "nm_012", "nm_046", "nm_017", "nm_019", "nm_020", "nm_022"],
+        "crystal_cave2": ["nm_002", "nm_012", "nm_046", "nm_017", "nm_019", "nm_020", "nm_022"],
+        "crystal_cave3": ["nm_046", "nm_017", "nm_019", "nm_020", "ice_maid", "ice_queen"],
         "zone_04": ["zombie", "ghoul", "nm_014", "nm_015", "nm_021"],
         "zone_05": ["nm_004", "nm_012", "nm_014", "nm_046", "nm_015", "nm_017", "nm_019", "nm_020", "nm_022"],
         "zone_06": ["orc", "orc_archer", "zombie", "fighter", "skeleton", "skel_archer", "ghoul", "sparto"],
@@ -1465,6 +1470,8 @@ const DB = {
     // ===== 怪物專屬掉落表（依「怪物掉落資料.md」）=====
     // 格式：怪物顯示名稱: [[物品ID, 掉落機率(%)], ...]  每樣獨立判定一次
     const MOB_DROPS = {
+        '冰之女王侍女': [['bk_thunder_storm', 0.05], ['bk_cancel', 0.1]],
+        '冰之女王': [['arm_88', 0.1], ['arm_63', 10], ['glv_crystal', 5], ['acc_116', 0.1], ['amu_int', 1], ['acc_122', 1], ['acc_128', 0.5], ['acc_129', 0.5], ['acc_130', 0.1], ['acc_131', 0.1], ['potion_haste', 1], ['scroll_weapon', 100], ['scroll_armor', 100], ['scroll_revive', 1], ['new_item_150', 1], ['new_item_151', 50], ['new_item_152', 5], ['bk_summon', 0.5], ['bk_invisible', 0.05], ['new_item_140', 1], ['potion_blue', 1], ['bk_fire_storm', 0.5], ['new_item_195', 1], ['bk_elf_winddash', 1], ['bk_elf_lifespring', 3], ['bk_elf_lifebless', 1], ['bk_elf_steelguard', 1], ['bk_magic_shield', 2], ['bk_dark_shadow', 1], ['bk_seal', 1]],
         '夢幻之島蘑菇': [['potion_haste',1], ['scroll_weapon',1], ['scroll_armor',2], ['potion_blue',1]],
         '夢幻之島鬼火': [['scroll_weapon',1], ['scroll_armor',2], ['scroll_poly',1]],
         '夢幻之島火蜥蜴': [['wpn_2hsword',1], ['wpn_giantaxe',1], ['scroll_weapon',1], ['scroll_armor',2], ['bk_fire_storm',0.01]],
@@ -1666,7 +1673,7 @@ let player = {
     inv: [], eq: { wpn: null, arrow: null, helm: null, armor: null, shield: null, cloak: null, tshirt: null, gloves: null, boots: null, ring1: null, ring2: null, amulet: null, belt: null },
     skills: [], buffs: { haste: 0, brave: 0, blue: 0, cautious: 0, elfcookie: 0, poly: 0, shield: 0, sk_magic_shield: 0 }, poly: null,
     summon: null, manualCd: {}, elfEle: null, hot: null,
-    cds: { pot: 0, atkSk: 0, healSk: 0 }, dead: false, statuses: { stun: 0, freeze: 0, stone: 0, poison: 0, poisonDmg: 0, poisonTick: 0, burn: 0, burnDmg: 0, burnTick: 0, scald: 0, scaldDmg: 0, scaldTick: 0, silence: 0, paralyze: 0, magicseal: 0, armorBreak: 0 },
+    cds: { pot: 0, atkSk: 0, healSk: 0 }, dead: false, statuses: { stun: 0, freeze: 0, stone: 0, poison: 0, poisonDmg: 0, poisonTick: 0, burn: 0, burnDmg: 0, burnTick: 0, scald: 0, scaldDmg: 0, scaldTick: 0, silence: 0, paralyze: 0, magicseal: 0, armorBreak: 0, slowAtk: 0 },
     d: { str:0, dex:0, con:0, int:0, wis:0, cha:8,
          meleeDmg: 0, meleeHit: 0, meleeCrit: 0,           // 近距離（力量）
          rangedDmg: 0, rangedHit: 0, rangedCrit: 0,         // 遠距離（敏捷）
@@ -2556,9 +2563,11 @@ function tick() {
         }
     }
     
+    if(player.statuses && player.statuses.slowAtk > 0) player.statuses.slowAtk--;   // 寒冰吐息：攻速減慢倒數
     if(canAct) {
         state.pDmgTick++;
         let aspdTicks = Math.max(1, Math.floor(player.d.aspd * 10));
+        if(player.statuses && player.statuses.slowAtk > 0) aspdTicks *= 2;            // 攻擊速度減慢100%（間隔翻倍）
         if(state.pDmgTick >= aspdTicks) {
             playerAttack();
             state.pDmgTick = 0;
@@ -3131,9 +3140,10 @@ function playerAttack() {
 		// 穿透（貝卡合金）：場上有兩名以上敵人時，普攻額外命中「主目標以外隨機一名敵人」，
 		// 造成與主目標相同的傷害與屬性；僅一名敵人時與一般近戰相同（不額外攻擊）。
         if (wpn && wpn.eff === 'pierce') {
+            let _pc = (wpn.pierceChance !== undefined) ? wpn.pierceChance : 100;   // 穿透發動機率(%)，未設定視為100%
             let otherIdx = [];
             mapState.mobs.forEach((m, i) => { if (m && m.curHp > 0 && m !== target) otherIdx.push(i); });
-            if (otherIdx.length > 0) {
+            if (otherIdx.length > 0 && roll(1, 100) <= _pc) {
                 let exIdx = otherIdx[Math.floor(Math.random() * otherIdx.length)];
                 let exT = mapState.mobs[exIdx];
                 exT.curHp -= result.dmg;
@@ -3426,6 +3436,25 @@ function applyMobMagic(mob, sk) {
         player.statuses.burnDmg = sk.d; 
         player.statuses.burnTick = sk.tick * 10;
         logCombat(`<span class="${getMobColor(mob.lv)}">${mob.n}</span> 施放${sk.skn || '魔法'}，你陷入了火牢灼燒！每 ${sk.tick} 秒受到 ${sk.d} 點固定傷害。`, 'enemy'); 
+        return;
+    }
+
+    // 寒冰吐息：(200 − 玩家MR)/2 % 機率，驅散玩家所有增益（夥伴與召喚保留），並使攻擊速度減慢100%，持續 dur 秒
+    if(sk.type === 'frost_breath') {
+        if(player.dead) return;
+        let chance = Math.max(0, ((sk.pbase !== undefined ? sk.pbase : 200) - player.d.mr) / 2);
+        if(Math.random() * 100 < chance) {
+            let kept = {};
+            for(let k in player.buffs) {
+                let skd = DB.skills[k];
+                if(k === 'sk_charm' || k === 'taming' || k === 'poly' || (skd && skd.summon)) kept[k] = player.buffs[k];
+            }
+            player.buffs = kept;
+            player.statuses.slowAtk = (sk.dur || 8) * 10;
+            calcStats();
+            logCombat(`<span class="${getMobColor(mob.lv)}">${mob.n}</span> 施放${sk.skn || '寒冰吐息'}，驅散了你的增益狀態，並使你的攻擊速度大幅減慢！（持續 ${sk.dur || 8} 秒）`, 'enemy');
+            updateUI();
+        }
         return;
     }
 
@@ -3735,10 +3764,10 @@ const STATUS_NAME = { freeze:'冰凍', stun:'暈眩', stone:'石化', sleep:'沉
 const STATUS_MSG = { magicseal:'的魔法遭到封印了。' };
 // 對 BOSS 無效的行動限制類狀態
 const BOSS_IMMUNE = ['freeze','stun','stone','sleep'];
-// 異常魔法命中判定（玩家對怪物，共用）：命中值 = 玩家等級 + 魔法命中 − (怪等級−10) − 怪MR/5，
+// 異常魔法命中判定（玩家對怪物，共用）：命中值 = 玩家等級 + 魔法命中 − (怪等級−10) − 怪MR/10，
 // clamp[0,20]，擲 1d20（與一般攻擊相同：擲20必中、擲1必失、其餘 命中值≥骰值 即命中），命中率 5%~95%。
 function abnormalMagicHit(m) {
-    let hv = player.lv + (player.d.magicHit || 0) - ((m.lv || 0) - 10) - ((m.mr || 0) / 5);
+    let hv = player.lv + (player.d.magicHit || 0) - ((m.lv || 0) - 10) - ((m.mr || 0) / 10);
     hv = Math.max(0, Math.min(20, hv));
     let r = roll(1, 20);
     return (r === 20) || (r !== 1 && hv >= r);
@@ -5471,7 +5500,7 @@ function buildItemDescHTML(item) {
     if (d.type === 'wpn' || d.type === 'arm' || d.type === 'acc') {
         let _eff = [];
         if (d.unBonus || d.unDice || d.sp === 'elf') _eff.push('不死/狼人加成');
-        if (d.eff === 'pierce')     _eff.push('穿透');
+        if (d.eff === 'pierce')     _eff.push('穿透' + (d.pierceChance !== undefined ? ' ' + d.pierceChance + '%' : ''));
         if (d.eff === 'moonburst')  _eff.push('月光爆裂');
         if (d.eff === 'dice_death') _eff.push('即死');
         if (d.eff === 'haste')      _eff.push('自我加速');
@@ -5946,6 +5975,7 @@ const MAP_CATEGORIES = {
         {v:'zone_06',t:'古魯丁地監1樓'},{v:'zone_07',t:'古魯丁地監2樓'},{v:'zone_08',t:'古魯丁地監3樓'},{v:'zone_09',t:'古魯丁地監4樓'},{v:'zone_10',t:'古魯丁地監5樓'},{v:'zone_11',t:'古魯丁地監6樓'},{v:'zone_12',t:'古魯丁地監7樓'},
         {v:'zone_13',t:'說話之島地監1樓'},{v:'zone_14',t:'說話之島地監2樓'},
         {v:'zone_15',t:'眠龍洞穴1樓'},{v:'zone_16',t:'眠龍洞穴2樓'},{v:'zone_17',t:'眠龍洞穴3樓'},
+        {v:'crystal_cave1',t:'水晶洞穴1樓'},{v:'crystal_cave2',t:'水晶洞穴2樓'},{v:'crystal_cave3',t:'水晶洞穴3樓'},
         {v:'zone_18',t:'奇岩地監1樓'},{v:'zone_19',t:'奇岩地監2樓'},{v:'zone_20',t:'奇岩地監3樓'},{v:'zone_21',t:'奇岩地監4樓'},
         {v:'zone_22',t:'沙漠地監1樓'},{v:'zone_23',t:'沙漠地監2樓'},{v:'zone_24',t:'沙漠地監3樓'},{v:'zone_25',t:'沙漠地監4樓'},
         {v:'zone_26',t:'龍之谷地監1樓'},{v:'zone_27',t:'龍之谷地監2樓'},{v:'zone_28',t:'龍之谷地監3樓'},{v:'zone_29',t:'龍之谷地監4樓'},{v:'zone_30',t:'龍之谷地監5樓'},{v:'zone_31',t:'龍之谷地監6樓'},
@@ -8577,7 +8607,7 @@ window.onload = () => {
         if(d.type === 'wpn' || d.type === 'arm' || d.type === 'acc'){
             let _eff = [];
             if(d.unBonus || d.unDice || d.sp === 'elf') _eff.push('不死/狼人加成');
-            if(d.eff === 'pierce')     _eff.push('穿透');
+            if(d.eff === 'pierce')     _eff.push('穿透' + (d.pierceChance !== undefined ? ' ' + d.pierceChance + '%' : ''));
             if(d.eff === 'moonburst')  _eff.push('月光爆裂');
             if(d.eff === 'dice_death') _eff.push('即死');
             if(d.eff === 'haste')      _eff.push('自我加速');
