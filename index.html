@@ -3451,7 +3451,7 @@ function enemyPhysicalAttack(mob, idx, stunChance = 0) {
     if (roll(1, 100) <= player.d.er) {
         logCombat(`${player.name || '你'} 成功迴避攻擊。`, 'evade');
         // 武士刀居合：無盾且敵人攻擊被迴避時，30% 對攻擊者打一次必定命中的一般攻擊
-        if (!player.dead && !player.eq.shield && mob.curHp > 0 && player.eq.wpn && getWeaponTags(player.eq.wpn.id).includes('武士刀') && Math.random() < 0.30) {
+        if (!player.dead && !player.eq.shield && mob.curHp > 0 && player.eq.wpn && getWeaponTags(player.eq.wpn.id).includes('武士刀') && Math.random() < 0.50) {
             procIai(mob);
         }
         return;
@@ -3502,7 +3502,10 @@ function enemyPhysicalAttack(mob, idx, stunChance = 0) {
         totalDmg -= randomDr;    // 隨機減免
 
         if(player.buffs.sk_holy_barrier > 0) totalDmg = Math.floor(totalDmg * 0.7);
-        if(player.statuses.freeze > 0) totalDmg += 400;
+        if(player.statuses.freeze > 0) {
+            totalDmg = Math.floor(totalDmg * 1.5);                              // 冰凍中：受到物理傷害 +50%
+            player.statuses.freeze = Math.max(0, player.statuses.freeze - 10); // 並使冰凍剩餘時間 -1 秒(10 ticks)
+        }
         if(player.statuses.armorBreak > 0) totalDmg = Math.floor(totalDmg * 1.5);   // 破壞盔甲：一般攻擊受傷 +50%
 
         // 常駐被動：看破（敵人版）— 命中時依機率造成兩倍傷害（5 + 等級/10 %）
@@ -3553,7 +3556,7 @@ function enemyPhysicalAttack(mob, idx, stunChance = 0) {
     } else {
         logCombat(`<span class="${getMobColor(mob.lv)}">${mob.n}</span> 的攻擊未命中。`, 'miss');
         // 武士刀居合：無盾且敵人攻擊未命中時，30% 對攻擊者打一次必定命中的一般攻擊
-        if (!player.dead && !player.eq.shield && mob.curHp > 0 && player.eq.wpn && getWeaponTags(player.eq.wpn.id).includes('武士刀') && Math.random() < 0.30) {
+        if (!player.dead && !player.eq.shield && mob.curHp > 0 && player.eq.wpn && getWeaponTags(player.eq.wpn.id).includes('武士刀') && Math.random() < 0.50) {
             procIai(mob);
         }
     }
@@ -4909,7 +4912,7 @@ function castSkill(skId) {
     
     if(sk.type === 'buff') {
         if(sk.reqWpn === 'w2h' && (!player.eq.wpn || !DB.items[player.eq.wpn.id].w2h)) return false;
-        if(sk.reqShield && !player.eq.shield) return false;
+        if(sk.reqShield && !player.eq.shield && !(player.eq.wpn && getWeaponTags(player.eq.wpn.id).includes('武士刀'))) return false;   // 武士刀：免盾亦可施展
         if(sk.summon) { setupSummon(skId, sk); player.mp -= cost; calcStats(); return true; }
         // 淨化類：無對應可解除的負面狀態則不施放
         if(skId === 'sk_antidote' || skId === 'sk_holy_light' || skId === 'sk_cancel') {
