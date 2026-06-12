@@ -4646,7 +4646,7 @@ function summonTierByLevel(lv) {
     if(lv >= 72) return { n:'召喚：黑豹', dmgDice:[2,14], dmgDiv:6, dmgLvDiv:10, interval:10, kind:'melee', hitLvOff:20, proc:{ p:0.20, cd:50, dmgDice:[6,10], ele:'none', name:'撕咬' } };
     if(lv >= 64) return { n:'召喚：地獄束縛犬', dmgDice:[3,15], dmgDiv:4, dmgLvDiv:15, interval:20, kind:'melee', hitLvOff:15, proc:{ p:0.15, cd:50, dmgDice:[4,12], ele:'fire', name:'噴火' } };
     if(lv >= 60) return { n:'召喚：地獄奴隸', dmgDice:[3,12], dmgDiv:4, dmgLvDiv:20, interval:20, kind:'melee', hitLvOff:12, proc:{ p:0.10, cd:50, dmgDice:[1,32], ele:'earth', name:'地獄之牙' } };
-    if(lv >= 52) return { n:'召喚：魔狼', dmgDice:[1,15], dmgDiv:8, dmgLvDiv:25, interval:10, kind:'melee', hitLvOff:10 };
+    if(lv >= 52) return { n:'召喚：魔狼', dmgDice:[1,15], dmgDiv:5, dmgLvDiv:25, interval:10, kind:'melee', hitLvOff:10 };   // 🔧 攻速低於2秒的召喚物：固定加成貼近前階（dmgDiv 8→5，Lv52/魅30 加成 11→18，對照食人妖精 20）
     if(lv >= 40) return { n:'召喚：食人妖精', dmgDice:[2,11], dmgDiv:4, dmgLvDiv:30, interval:20, kind:'melee', hitLvOff:7 };
     if(lv >= 32) return { n:'召喚：甘地妖魔', dmgDice:[2,8], dmgDiv:5, dmgLvDiv:35, interval:20, kind:'melee', hitLvOff:3 };
     return { n:'召喚：哈柏哥布林', dmgDice:[1,15], dmgDiv:5, dmgLvDiv:40, interval:20, kind:'melee', hitLvOff:0 };
