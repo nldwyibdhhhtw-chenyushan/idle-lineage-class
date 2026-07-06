@@ -1278,30 +1278,26 @@ function pandoraRenderMarket(div) {
         let inst = { id: s.id };
         let rare = s.weight === 1;
         let afford = (player.gold || 0) >= s.price;
-        let border = s.sold ? 'border-slate-700' : rare ? 'border-purple-400 shadow-[0_0_10px_rgba(192,132,252,0.45)]' : 'border-slate-600';
+        let border = s.sold ? 'border-slate-700' : rare ? 'border-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.45)]' : 'border-slate-600';
+        // 🔧 v3.0.87 緊湊「單行橫條」：圖示｜名稱/價格｜購買鈕（右側·窄）→ 每列高度約砍半，5 橫排可完整顯示、少捲動
         let btn = s.sold
-            ? `<button disabled class="btn w-full bg-slate-700 border-slate-600 opacity-60 cursor-not-allowed font-bold py-1 rounded" style="font-size:11px;">已售出</button>`
-            : `<button onclick="buyPandoraItem(${i})" ${afford ? '' : 'disabled'} class="btn w-full ${afford ? 'bg-purple-700 hover:bg-purple-600 border-purple-500' : 'bg-slate-700 border-slate-600 opacity-60 cursor-not-allowed'} font-bold py-1 rounded" style="font-size:11px;">購買</button>`;
-        return `<div class="rounded-lg border ${border} bg-slate-900/80 p-1.5 flex flex-col gap-1 ${s.sold ? 'opacity-70' : ''}"
+            ? `<button disabled class="btn shrink-0 bg-slate-700 border-slate-600 opacity-60 cursor-not-allowed font-bold rounded" style="font-size:10px;padding:2px 6px;">售出</button>`
+            : `<button onclick="buyPandoraItem(${i})" ${afford ? '' : 'disabled'} class="btn shrink-0 ${afford ? 'bg-purple-700 hover:bg-purple-600 border-purple-500' : 'bg-slate-700 border-slate-600 opacity-60 cursor-not-allowed'} font-bold rounded" style="font-size:10px;padding:2px 7px;">購買</button>`;
+        return `<div class="rounded-md border ${border} bg-slate-900/80 flex items-center gap-1 ${s.sold ? 'opacity-70' : ''}" style="padding:2px 4px;"
             onmouseenter="pandoraTipShow(event,${i})" onmousemove="pandoraTipMove(event)" onmouseleave="pandoraTipHide()">
-            <div class="flex items-center gap-1.5 min-w-0">
-                <img src="${getIconUrl(d)}" onerror="this.src='https://placehold.co/40x40/1e293b/ffffff?text=?';" class="shrink-0 object-contain ${s.sold ? 'grayscale opacity-40' : getGlowClass(inst, d)}" style="width:34px;height:34px;">
-                <div class="min-w-0 flex-1">
-                    <div class="font-bold leading-tight truncate ${getItemColor(inst)}" style="font-size:12px;">${d.n}</div>
-                    <div class="text-yellow-300 font-bold leading-tight truncate" style="font-size:11px;">${s.price.toLocaleString()}<span class="text-slate-500" style="font-size:9px;"> 金</span></div>
-                </div>
+            <img src="${getIconUrl(d)}" onerror="this.src='https://placehold.co/40x40/1e293b/ffffff?text=?';" class="shrink-0 object-contain ${s.sold ? 'grayscale opacity-40' : getGlowClass(inst, d)}" style="width:22px;height:22px;">
+            <div class="min-w-0 flex-1">
+                <div class="font-bold leading-none truncate ${getItemColor(inst)}" style="font-size:11px;">${d.n}</div>
+                <div class="text-yellow-300 font-bold leading-none truncate" style="font-size:10px;margin-top:2px;">${s.price.toLocaleString()}<span class="text-slate-500" style="font-size:8px;"> 金</span></div>
             </div>
             ${btn}
         </div>`;
     }).join('');
     div.innerHTML = `
-    <div class="flex flex-col h-full p-3 w-full overflow-y-auto">
-        <div class="text-center mb-2 shrink-0">
-            <h3 class="text-2xl font-bold text-purple-400 drop-shadow-md leading-tight">潘朵拉黑市</h3>
-            <p class="text-slate-400 leading-snug" style="font-size:11px;">同時陳列 20 件商品·每 5 分鐘輪換 1 件（每件持續 100 分鐘）·滑鼠移到商品上檢視能力<br>距下次輪換約 <span class="text-slate-200">${nextMin}</span> 分鐘｜你的金幣：<span class="text-yellow-300 font-bold">${(player.gold || 0).toLocaleString()}</span></p>
-        </div>
-        <div class="grid grid-cols-4 gap-1.5">${cards}</div>
-        <p id="pandora-msg" class="text-yellow-300 mt-2 font-bold text-sm text-center shrink-0" style="min-height:1.5rem;"></p>
+    <div class="flex flex-col h-full w-full overflow-y-auto" style="padding:4px 6px;">
+        <h3 class="text-center font-bold text-purple-400 drop-shadow-md leading-none shrink-0" style="font-size:15px;margin-bottom:4px;">潘朵拉黑市 <span class="text-slate-400 font-normal" style="font-size:10px;">每 5 分輪換 1 件·滑鼠移上檢視能力·約 ${nextMin} 分後輪換｜金幣 <span class="text-yellow-300 font-bold">${(player.gold || 0).toLocaleString()}</span></span></h3>
+        <div class="grid gap-1.5" style="grid-template-columns:repeat(4,minmax(0,1fr));">${cards}</div><!-- 🔧 v3.0.87 用 inline grid-template-columns 指定 4 欄：預編譯 tailwind-built.css 只含 .md:grid-cols-4（響應式變體）而無無前綴 .grid-cols-4→原 class 失效退回單欄(20 直排·太長)；改 inline 不依賴 build -->
+        <p id="pandora-msg" class="text-yellow-300 font-bold text-center shrink-0 empty:hidden" style="font-size:12px;margin-top:4px;"></p>
     </div>`;
 }
 

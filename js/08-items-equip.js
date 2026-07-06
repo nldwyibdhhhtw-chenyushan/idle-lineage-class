@@ -575,6 +575,7 @@ const ILLUSION_WHITELIST = new Set([
 function illusionEquipOk(d, id) {
     if (!d) return false;
     if (d.type === 'wpn' && getWeaponTags(id).includes('匕首')) return false;   // 🔮 幻術士無法使用任何匕首（含全職業匕首）
+    if (d.type === 'wpn' && ['單手矛', '雙手矛'].includes(atkSpdFamily(id))) return false;   // 🔮 v3.0.90 用戶：幻術士不可使用任何矛（含全職業矛·早退→req:all／開放清單皆擋）
     if (reqAllowsClass(d, 'illusion')) return true;   // 全職業(req:all/無req·匕首已排除)或 req 含 illusion（奇古獸/幻術士專屬裝備）
     if (ILLUSION_WHITELIST.has(d.n || '')) return true;   // 開放清單（特定職業限定→開放給幻術士）
     return false;
@@ -592,6 +593,7 @@ const DRAGON_WHITELIST = new Set([
 function dragonEquipOk(d, id) {
     if (!d) return false;
     if (d.type === 'wpn' && getWeaponTags(id).includes('匕首')) return false;   // 🐉 龍騎士無法使用任何匕首（含全職業匕首）
+    if (d.type === 'wpn' && ['單手矛', '雙手矛'].includes(atkSpdFamily(id))) return false;   // 🐉 v3.0.90 用戶：龍騎士不可使用任何矛（含全職業矛·早退→req:all／開放清單皆擋）
     if (reqAllowsClass(d, 'dragon')) return true;   // 全職業(req:all/無req·匕首已排除)或 req 含 dragon（龍騎士專屬裝備）
     if (DRAGON_WHITELIST.has(d.n || '')) return true;   // 開放清單（特定職業限定→開放給龍騎士）
     return false;
