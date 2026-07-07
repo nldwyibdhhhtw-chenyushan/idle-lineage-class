@@ -2014,6 +2014,7 @@ function _reviveAllyDone(ally, via) {
     logSys(`<span class="text-emerald-300 font-bold">使用 ${via}，協力傭兵 ${ally._allyName} 原地復活（HP 50%）！</span>`);
     saveGame(); updateUI();
     try { renderSquadPanel(); } catch (e) {}
+    if (typeof playSelfFx === 'function') { try { setTimeout(function () { playSelfFx('返生術', (typeof _partyMemberRect === 'function') ? _partyMemberRect(ally) : null); }, 30); } catch (e) {} }   // 🪦 v3.0.102 返生術/復活卷軸→於復活的傭兵身上播返生術特效（延一拍待 sprite 復現後錨定）
 }
 // 🤝 Phase 3：回村/回城（進入 town_ 安全區）免費復活全體倒地傭兵至滿血滿魔（由 changeMap 村莊分支呼叫）
 function reviveDownedMercsAtTown() {

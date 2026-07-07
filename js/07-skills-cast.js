@@ -78,6 +78,7 @@ function summonTick(sm, clearFn, owner) {
 // 🔮 幻覺3/5：輔助技能(buff/heal/轉換/淨化等·非直接攻擊) MP 消耗 -50%
 const _SUPPORT_SKILL_TYPES = ['buff','self_buff','self_haste','heal','self_heal','heal_allies','convert','pray','bless','call_ally','dispel'];
 function isSupportSkill(sk){ return !!sk && _SUPPORT_SKILL_TYPES.indexOf(sk.type) >= 0; }
+let _lastHealFxTarget = null;   // 🩹 最近一次治癒魔法的實際受益者（供 castSkill 把治癒特效疊在其身上·非施法者）
 function cubeTick() {
     if (player.dead || !state.running || !player.skills) return;
     player._cubeCd = player._cubeCd || {};
@@ -185,7 +186,7 @@ function manualCast(skId) {
         if(KING_ROOMS[mapState.current]) { logSys('<span class="text-red-400">軍王之室的封印之力壓制了傳送術，無法生效。</span>'); return; }
         if(prideTeleportBlocked()) { logSys('<span class="text-red-400">' + (state.riftRun ? '時空裂痕中無法使用傳送術。' : (state.prideRanked ? '排名挑戰中無法使用傳送術。' : '在此樓層需持有對應的傲慢之塔支配符才能使用傳送術。')) + '</span>'); return; }
         if(state.oblivion) { logSys('<span class="text-red-400">遺忘之島的迷霧壓制了傳送術，無法生效。</span>'); return; }
-        if(typeof playSelfFx === 'function') { try { playSelfFx('傳送術'); } catch(e){} }   // 🌀 v2.7.54 傳送術特效（過所有封鎖閘後、實際傳送前播·於戰鬥區中央光柱）
+        // 🌀 v3.0.102 傳送術特效＋玩家 sprite 暫隱已移入 doTeleport / enterHiddenArea（涵蓋技能與瞬移卷軸所有路徑）
         if (HIDDEN_AREA_PARENT[mapState.current]) {   // 🏛️ 對應地圖手動施放傳送術→進入隱藏狩獵區域（MP 已扣、冷卻照走）
             enterHiddenArea(HIDDEN_AREA_PARENT[mapState.current]);
         } else {
@@ -216,12 +217,14 @@ function manualCast(skId) {
                 hitBonus:(t.hit||0), proc:null, cd:10, endTick: state.ticks + 36000
             };
             logCombat(`<span class="${getMobColor(t.lv)}">${t.n}</span> 成為你的僕人。`, 'magic');
+            if(typeof playSpellFx === 'function') { try { playSpellFx(sk.n, t); } catch(e){} }   // 🔮 迷魅術特效疊在目標身上（於移除前·否則卡片消失無法錨定）
             if(idx !== -1) { mapState.mobs[idx] = null; renderMobs(); }
         } else logCombat('迷魅術失敗了。', 'miss');
     } else if(sk.mEff === 'barrier') {
         // 🛡️ 絕對屏障：施放後進入隔絕狀態（持續 sk.dur 秒；無敵且無法行動）
         player.buffs.sk_abs_barrier = sk.dur;
         logCombat(`<span class="font-bold" style="color:#7dd3fc;text-shadow:0 0 8px #38bdf8;">${sk.msg || '你感覺身體與這個世界隔絕了。'}</span>`, 'magic');
+        if(typeof playSelfFx === 'function') { try { playSelfFx(sk.n); } catch(e){} }   // 🛡️ 絕對屏障特效疊在玩家頭上（手動技·不經 castSkill 的 isSupportSkill 掛點）
     }
     player.mp -= cost;
     if (player.mastery === 'i_mana' && player.mp < _mpBeforeManual) manaMasteryRefund(_mpBeforeManual - player.mp);   // 🔮 魔力精通：手動施法消耗MP→傭兵回饋10%
@@ -241,7 +244,13 @@ function castSkill(skId) {
         if (player.mp < _before) manaMasteryRefund(_before - player.mp);
     }
     if (r) { try { playSpellCast(DB.skills[skId] ? DB.skills[skId].n : null); } catch(e){} }   // 🔊 音效：施法成功才出聲（依技能名對應專屬施展音，查無→通用魔法音）
-    if (r && typeof playSelfFx === 'function' && DB.skills[skId] && isSupportSkill(DB.skills[skId])) { try { playSelfFx(DB.skills[skId].n); } catch(e){} }   // 🙏 v2.7.48 自我增益特效：治癒/武器附魔/防禦/屏障等 buff/heal 施放成功→#battle-view 中央疊播(未註冊靜默略過)
+    if (r && typeof playSelfFx === 'function' && DB.skills[skId] && isSupportSkill(DB.skills[skId])) {   // 🙏 v2.7.48 自我增益特效：buff→玩家頭上(overHead)·heal→被治療目標身上（未註冊靜默略過）
+        try {
+            let _sk = DB.skills[skId];
+            let _anchor = (_sk.type === 'heal' && typeof _partyMemberRect === 'function') ? _partyMemberRect(_lastHealFxTarget || player) : null;   // 🩹 治癒特效疊在實際受益者身上；其餘 buff 走 playSelfFx 內 overHead（玩家頭上）
+            playSelfFx(_sk.n, _anchor);
+        } catch(e){}
+    }
     return r;
 }
 // 👑 魔法精通：免費額外施放「目前設定的攻擊技能」（_royalFreeCast → 不耗MP、不受攻擊冷卻；castSkill 內部仍會驗證等級/目標/MP，可施放才施放）
@@ -370,6 +379,7 @@ function castSkillInner(skId) {
         // 🤝 v3.0.94 隊長治癒也幫隊員：目標＝隊伍(玩家＋未倒地傭兵)中 HP% 最低者（原僅治癒玩家自己；鏡像傭兵 allyTryHeal 的選人規則）
         let _hTgt = player, _hPct = (player.mhp > 0) ? (player.hp / player.mhp) : 1;
         (player.allies || []).forEach(a => { if (a && !a._downed && (a.curHp || 0) > 0 && (a.mhp || 0) > 0) { let _p2 = a.curHp / a.mhp; if (_p2 < _hPct) { _hPct = _p2; _hTgt = a; } } });
+        _lastHealFxTarget = _hTgt;   // 🩹 記錄受益者→castSkill 把治癒特效疊在其身上
         if (_hTgt === player) player.hp = Math.min(player.mhp, player.hp + heal);
         else _hTgt.curHp = Math.min(_hTgt.mhp, (_hTgt.curHp || 0) + heal);
         player.cds.healSk = getAutoCastInterval();

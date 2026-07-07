@@ -958,6 +958,7 @@ function reviveInPlace() {
     document.getElementById('btn-revive').classList.add('hidden');
     { let ip = document.getElementById('btn-revive-inplace'); if(ip) ip.classList.add('hidden'); }
     calcStats(); updateUI();
+    if (typeof playSelfFx === 'function') { try { playSelfFx('返生術', (typeof _partyMemberRect === 'function') ? _partyMemberRect(player) : null); } catch (e) {} }   // 🪦 v3.0.102 返生術/復活卷軸→於復活的玩家身上播返生術特效
     if (player.allies && player.allies.length) logSys('<span class="text-emerald-300">原地復活，協力傭兵仍在你身邊。</span>');
     saveGame();   // 原地復活成功後自動存檔（傭兵保留）
 }
