@@ -1734,13 +1734,8 @@ function allyMaintainBuffs(ally) {
             //    改為：只維持「來源角色有勾選自動施放」的 buff（沒有 config 或未勾＝不維持·與該角色親自遊玩時完全一致）。⚠️summon/HoT 走各自區塊·此閘只管 _isMercSelfBuff 自我增益。
             if (!_mercAutoOn(ally, sid)) continue;
             if (typeof TEAM_AURA_SKILLS !== 'undefined' && TEAM_AURA_SKILLS.includes(sid) && _teamAuraHas(sid, ally)) continue;   // 🌟 v3.0.99 團隊光環：隊上其他隊員已維持中→不重複施放（全隊只需一個來源·免白耗MP）
-            // 🆕 v2.6.50 用戶要求：傭兵輔助法術「以主要玩家為判斷依據」→ 主玩家身上已有此輔助狀態就不施放、沒有才施放。
-            //    (player.buffs 與 ally.buffs 皆以技能 id 為鍵·同一輔助 buff 可直接比對；加速另有 buffs.haste 具名鍵·含藥水加速一併判定)
-            if (typeof player !== 'undefined' && player && player.buffs) {
-                if ((player.buffs[sid] || 0) > 0) continue;                  // 主玩家已有同一輔助法術的 buff → 不放
-                if (sk.haste && (player.buffs.haste || 0) > 0) continue;     // 主玩家已處於加速狀態（含藥水加速）→ 不放加速類
-            }
-            if ((ally.buffs[sid] || 0) > 0) continue;   // 已生效（含 noRefresh 語意）；保留自身守衛避免同一秒重複施放/MP 空轉
+            // 🩹 v3.0.107 移除「以主要玩家 buff 為判斷依據」閘（原 v2.6.50）：_isMercSelfBuff 全是「自我增益」——靈魂昇華(自身 mHP/mMP×1.2)、力量/敏捷/防禦/武器附魔/加速…都只加持「施法者本人」，主玩家身上有不代表傭兵有。原閘害「主角(法師)也放同一 buff 時，傭兵法師永遠不自我增益」（用戶回報：傭兵法師點亮靈魂昇華卻不施放）。MP 浪費已由 opt-in 開關(_mercAutoOn)把關；團隊光環(TEAM_AURA)另由上方 _teamAuraHas 閘控制·不受此改動影響。
+            if ((ally.buffs[sid] || 0) > 0) continue;   // 已生效（含 noRefresh 語意）；保留「自身」守衛避免同一秒重複施放/MP 空轉
             if (sk.darkStealth && (ally._darkStealthCd || 0) > state.ticks) continue;   // 🖤 v2.7.92 暗隱術（傭兵）：迴避消費後 5 秒冷卻內不再施放（鏡像玩家 js/07 autocast 閘）
             let w = (ally.eq && ally.eq.wpn) ? DB.items[ally.eq.wpn.id] : null;
             if (sk.reqWpn === 'w2h' && (!w || !w.w2h)) continue;
@@ -2133,6 +2128,19 @@ function _mercLedgerFlush() {
     else setTimeout(_mercLedgerFlush, 1500 + Math.floor(Math.random() * 1000));   // 隨機退避重試
 }
 if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('pagehide', () => { try { _mercLedgerFlush(); } catch (e) {} });   // 🛡️ 審計#8：關分頁前最後一次 flush（失敗仍有 player 鏡像兜底）
+// 🩹 v3.0.108 新角色覆蓋某存檔位→清除該存檔位的所有待領傭兵經驗（屬前一個角色·新角色不繼承）。掛點＝js/13 startGame（創角完成寫檔前）。
+function mercLedgerPurgeSlot(slotN) {
+    try {
+        slotN = String(slotN);
+        _mercLedgerOutbox = _mercLedgerOutbox.filter(r => !r || String(r.slot) !== slotN);   // 先清尚未 flush 的待寫紀錄
+        _mercSyncPlayerOutbox();
+        _mercLedgerLocked(() => {                                                             // 再清 localStorage 帳本（跨分頁鎖內）
+            let led = _mercLedgerRead();
+            let kept = led.filter(r => !r || String(r.slot) !== slotN);
+            if (kept.length !== led.length) _mercLedgerWrite(kept);
+        });
+    } catch (e) {}
+}
 // 🤝 結算＝建立一筆待領紀錄（解散 reason='dismiss'／隊長回村 reason='town'）。只歸零 _expGained 計數，不動來源存檔、不動戰力快照；
 //    回村結算後傭兵留在隊上繼續累積下一筆。回傳 logSys 訊息片段（無累積經驗→''）。
 function _settleAllyExp(ally, reason) {
@@ -2143,7 +2151,7 @@ function _settleAllyExp(ally, reason) {
         let rec = {
             uid: 'MX' + Date.now().toString(36) + '_' + Math.floor(Math.random() * 1e9).toString(36),                            // 唯一編號
             party: (player && player.name ? player.name : '?') + '@' + (typeof currentSlot !== 'undefined' ? currentSlot : '?'),   // 來源隊伍（隊長名@存檔位）
-            slot: String(ally._slot), cls: ally.cls, name: ally.name || '',                                                       // 傭兵存檔身分（領取時三重比對）
+            slot: String(ally._slot), cls: ally.cls, name: ally.name || '', enSeed: ally.enSeed || '',                     // 傭兵存檔身分（領取時比對；enSeed＝唯一角色識別·防同存檔位重新創角誤領）
             exp: banked, ts: Date.now(), reason: reason || 'dismiss', claimed: false
         };
         ally._expGained = 0;
@@ -2170,6 +2178,7 @@ function mercExpClaimPending(_retry) {
             led.forEach(r => {
                 if (!r || r.claimed) return;
                 if (String(r.slot) !== String(currentSlot) || r.cls !== player.cls || (r.name || '') !== (player.name || '')) return;   // 🛡️ 三重守衛：防換角/刪角誤領
+                if (r.enSeed && player.enSeed && r.enSeed !== player.enSeed) return;   // 🩹 v3.0.108 enSeed 唯一角色識別：同存檔位+同名+同職業但實為「重新創角的不同角色」→enSeed 不同→不誤領（舊紀錄無 enSeed 則沿用三重守衛）
                 total += Math.max(0, Math.floor(r.exp || 0));
                 r.claimed = true; r.claimedAt = Date.now(); hit = true;   // 標記已結算：同一筆只能領一次（跨分頁由鎖保證）
             });

@@ -394,6 +394,7 @@
             100% { opacity: 0; transform: translate(-50%,-235%) scale(1); }
         }
         .vfx-particle { position: absolute; border-radius: 50%; transform: translate(-50%,-50%); will-change: transform,opacity; }
+        .vfx-blood { position: absolute; border-radius: 50%; transform: translate(-50%,-50%); will-change: transform,opacity; pointer-events: none; }   /* 🩸 命中濺血小血滴：小顆、不上發光陰影→不搶眼 */
         /* ✨ 怪物死亡：衝擊波環 + 白閃殘影（vfxKill 以 element.animate 驅動·邊框色/尺寸由 JS 內聯指定） */
         .vfx-killring { position: absolute; border-radius: 50%; transform: translate(-50%,-50%); border: 4px solid #ff8a5c; pointer-events: none; will-change: transform,opacity; }
         .vfx-ghost { position: absolute; transform: translate(-50%,-50%); object-fit: contain; pointer-events: none; will-change: transform,opacity,filter; }
