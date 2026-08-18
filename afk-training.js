@@ -505,6 +505,15 @@
     for (k in src) target[k] = src[k];
   }
 
+  // 出生序：核心 getTarget() 是「_born 最小＝在場上最久」的怪自動鎖定，缺這個欄位的怪一隻都選不上
+  //   （比較是嚴格 <、bestBorn 初值 Infinity → 全員 Infinity 時回 null）→ 玩家與傭兵整場不出手，
+  //   只剩持續傷害型增益與召喚物在打。跟核心 spawnMob 共用同一個全域序號。
+  function nextBorn() {
+    try { if (typeof _mobBornSeq !== 'undefined') return ++_mobBornSeq; } catch (e) { /* 核心沒這個全域→走下面的後備 */ }
+    return ++bornFallback;
+  }
+  var bornFallback = 0;
+
   // ---- 造訓練怪 -----------------------------------------------------------
   function spawnTrainingMobs() {
     mapState.mobs = [null, null, null, null, null];
@@ -518,13 +527,14 @@
       var inst = Object.assign({}, base, {
         hp: TRAIN_HP, curHp: TRAIN_HP, uid: window.uid(),
         _magCd: {}, justHit: false, st: window.newMobStatus(),
+        _born: nextBorn(), _bornMs: Date.now(),   // 欄位對齊核心 spawnMob（_born 是自動鎖定目標的依據，見上）
         _train: true, _slotLabel: i
       });
       if (base.hard && typeof window.initHardSkin === 'function') window.initHardSkin(inst);
       mapState.mobs[RENDER_ORDER[i]] = inst;
     }
     applyWorldMode();
-    mapState.targetIdx = -1;   // 不硬鎖最左:設 -1 讓遊戲 getTarget() 自動瞄(優先序中央→左→右,同一般地圖)→ 木人場也是一開始瞄中間
+    mapState.targetIdx = -1;   // 不自己指定:設 -1 讓遊戲 getTarget() 自動瞄(挑 _born 最小的→選怪格 #1,同一般地圖挑最早出生的那隻)
     if (typeof window.renderMobs === 'function') window.renderMobs();
   }
 
