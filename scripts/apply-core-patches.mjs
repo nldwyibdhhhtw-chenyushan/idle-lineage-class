@@ -402,7 +402,35 @@ function patchIllusionSetWpnProc() {
   }
 }
 
-const PATCHES = [patchMaybeSpawnMobs, patchTradEnHook, patch16Slots, patchPetAnimTicker, patchBossHuntEscape, patchUseItemKeepModal, patchSellNowNoForce, patchInsigniaOrder, patchGiltasWandRecompute, patchEyeSlotInEquipList, patchRelicAffixHook, patchIllusionSetWpnProc];
+// ── 補丁 13：js/24 收購 NPC 的強化值判定改由外掛決定「這一件能不能交」 ──────────
+//   上游 _findMatches 只認「強化值完全相等」,所以收 +6 的單,手上只有 +15 就交不了。
+//   為什麼不能純外掛包:_findMatches 關在 js/24 的 IIFE 裡拿不到;唯一的替代路是
+//   「暫時把某件的 en 改成需求值騙過核心」,而成交後核心自己會 saveGame() → 整疊 +15 會被
+//   真的寫成 +6(玩家的裝備安靜變質)。故走錨點補丁,只開一個判斷鉤子。
+//   鉤子回 null(或外掛沒載/被關掉)→ 完全等同原版嚴格相等;回 true/false 才由外掛決定。
+//   「挑哪一件」100% 留在外掛層(afk-buyercompat.js),核心只回答「這一件通不通過」。
+function patchBuyerEnHook() {
+  const FILE = 'js/24-pandora-relic-market.js';
+  let s = readFileSync(FILE, 'utf8');
+  if (s.includes('__afkBuyerEnMatch')) { already++; return; }   // 冪等
+  const ANCHOR = 'if (req.en != null && Math.floor(Number(it.en) || 0) !== Math.floor(Number(req.en) || 0)) continue;';
+  if (s.indexOf(ANCHOR) < 0) throw new Error(`[${FILE}] 找不到收購強化值判定錨點——上游可能改寫了 _findMatches,請人工檢查(此補丁供「收購向下兼容」外掛決定要交哪一件)。`);
+  const REPLACEMENT =
+    'if (req.en != null) {\n' +
+    '                        /* 🔌 加掛版補丁:讓外掛決定「這一件能不能交」(向下兼容:收 +6 也可以繳 +15)。 */\n' +
+    '                        /*    回 null 或外掛未載/已關 → 走下面的原版嚴格相等,行為與上游完全一致。 */\n' +
+    '                        let _afkOk = (typeof window !== \'undefined\' && typeof window.__afkBuyerEnMatch === \'function\')\n' +
+    '                            ? window.__afkBuyerEnMatch(it, req, source.name) : null;\n' +
+    '                        if (_afkOk == null) { if (Math.floor(Number(it.en) || 0) !== Math.floor(Number(req.en) || 0)) continue; }\n' +
+    '                        else if (!_afkOk) continue;\n' +
+    '                    }';
+  s = s.replace(ANCHOR, REPLACEMENT);
+  if (!CHECK) writeFileSync(FILE, s);
+  changed++;
+  console.log(`[patch] 收購強化值判定開放給外掛（${FILE}）`);
+}
+
+const PATCHES = [patchMaybeSpawnMobs, patchTradEnHook, patch16Slots, patchPetAnimTicker, patchBossHuntEscape, patchUseItemKeepModal, patchSellNowNoForce, patchInsigniaOrder, patchGiltasWandRecompute, patchEyeSlotInEquipList, patchRelicAffixHook, patchIllusionSetWpnProc, patchBuyerEnHook];
 
 try {
   for (const p of PATCHES) p();

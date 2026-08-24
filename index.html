@@ -690,6 +690,8 @@
     <script src="afk-anyclass.js?v=533d290037"></script>
     <!-- afk-locksafe：上鎖的裝備不會被潘朵拉收購/遺物布告欄拿走 -->
     <script src="afk-locksafe.js?v=a1ab38bb29"></script>
+    <!-- afk-buyercompat：收購 NPC 向下兼容（收 +6 也可以繳 +15）——需搭配 apply-core-patches 補丁 13 的 __afkBuyerEnMatch 鉤子；排在 afk-locksafe 之後＝在最外層 -->
+    <script src="afk-buyercompat.js"></script>
     <!-- 傳統模式(偽)/自動衝裝：需搭配 scripts/apply-core-patches.mjs 的 gainItem _tEn 鉤子 -->
     <script src="afk-traditional.js?v=99472abfb1"></script>
     <script src="afk-warehouse.js?v=ae8c589300"></script>

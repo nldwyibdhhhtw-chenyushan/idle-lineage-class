@@ -1034,7 +1034,14 @@
                     let count = Math.floor(Number(it && it.cnt));
                     if (!Number.isFinite(count) || count < 1) count = it ? 1 : 0;
                     if (!it || it.id !== req.id || count < 1) continue;
-                    if (req.en != null && Math.floor(Number(it.en) || 0) !== Math.floor(Number(req.en) || 0)) continue;
+                    if (req.en != null) {
+                        /* 🔌 加掛版補丁:讓外掛決定「這一件能不能交」(向下兼容:收 +6 也可以繳 +15)。 */
+                        /*    回 null 或外掛未載/已關 → 走下面的原版嚴格相等,行為與上游完全一致。 */
+                        let _afkOk = (typeof window !== 'undefined' && typeof window.__afkBuyerEnMatch === 'function')
+                            ? window.__afkBuyerEnMatch(it, req, source.name) : null;
+                        if (_afkOk == null) { if (Math.floor(Number(it.en) || 0) !== Math.floor(Number(req.en) || 0)) continue; }
+                        else if (!_afkOk) continue;
+                    }
                     found = { source: source.name, index: i, item: it, usedKey: usedKey };
                     break;
                 }
