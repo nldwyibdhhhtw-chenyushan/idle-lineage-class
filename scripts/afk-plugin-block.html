@@ -66,6 +66,8 @@
     <script src="afk-ancdrop.js"></script>
     <!-- 重複的遺物會帶詞綴：遺物收集冊已收錄的那件，之後再打到的每一件各自 50% 擲祝福／遠古系／屬性（屬性只上武器遺物）。需核心補丁 11 的 __afkRelicAffix 鉤子 -->
     <script src="afk-relicaffix.js"></script>
+    <!-- 遺物整理：重複的遺物一次清掉（賣金幣走核心 getSellPrice／回收換龍鑽 3 顆一件）；每個遺物 id 自動保留最好的 1 件（布告欄搜尋的抽獎池看的是「你現在手上有沒有」，全清掉會搜回剛丟的那件）。排在 afk-relicaffix 之後＝在最外層包 renderRelicBook，入口不會被它的說明行擠掉 -->
+    <script src="afk-relicbatch.js"></script>
     <!-- 黑市收購價提示：收購欄下方即時顯示必中價/命中率/平均要等多久（遊戲只能靠掛單試）；也開 AFK_BM 給 afk-dex 的物品詳情標價 -->
     <script src="afk-bmprice.js"></script>
     <!-- 只迴避指定頭目：把上游「迴避頭目(瞬移卷軸)」的範圍從「全部的王」縮小到玩家挑的那幾隻（每張地圖各自一份） -->
