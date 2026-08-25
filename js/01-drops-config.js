@@ -1466,14 +1466,14 @@ function freshPlayerState() { return JSON.parse(PLAYER_INIT_SNAPSHOT); }
 function freshMapState() { return JSON.parse(MAPSTATE_INIT_SNAPSHOT); }
 let _mobBornSeq = 0;   // 🎯 全域單調遞增「出生序」（每隻怪生成時 +1；越小＝越早出生／在場上存活越久）→ getTarget 用來「優先打先出生的怪」
 let createBase = { 
-    knight: {str:20, dex:20, con:20, int:20, wis:20, cha:8, pts:12}, 
-    mage: {str:20, dex:20, con:20, int:20, wis:20, cha:8, pts:12},
-    elf: {str:20, dex:20, con:20, int:20, wis:20, cha:8, pts:12}, // 妖精基底（可分配8點
-    dark: {str:20, dex:20, con:20, int:20, wis:20, cha:8, pts:12}, // 黑暗妖精基底（可分配11點，以0計）
-    illusion: {str:20, dex:20, con:20, int:20, wis:20, cha:8, pts:12}, // 幻術士基底（可分配10點，以0計）
-    dragon: {str:20, dex:20, con:20, int:20, wis:20, cha:8, pts:12}, // 龍騎士基底（可分配6點，以0計）
-    warrior: {str:20, dex:20, con:20, int:20, wis:20, cha:8, pts:12}, // ⚔️ 戰士基底（可分配5點，以0計）
-    royal: {str:20, dex:20, con:20, int:20, wis:20, cha:8, pts:12} // 👑 王族基底（可分配8點，以0計）
+    knight: {str:19, dex:60, con:60, int:60, wis:60, cha:60, pts:1}, 
+    mage: {str:19, dex:60, con:60, int:60, wis:60, cha:60, pts:1},
+    elf: {str:19, dex:60, con:60, int:60, wis:60, cha:60, pts:1}, // 妖精基底（可分配8點
+    dark: {str:19, dex:60, con:60, int:60, wis:60, cha:60, pts:1}, // 黑暗妖精基底（可分配11點，以0計）
+    illusion: {str:19, dex:60, con:60, int:60, wis:60, cha:60, pts:1}, // 幻術士基底（可分配10點，以0計）
+    dragon: {str:19, dex:60, con:60, int:60, wis:60, cha:60, pts:1}, // 龍騎士基底（可分配6點，以0計）
+    warrior: {str:19, dex:60, con:60, int:60, wis:60, cha:60, pts:1}, // ⚔️ 戰士基底（可分配5點，以0計）
+    royal: {str:19, dex:60, con:60, int:60, wis:60, cha:60, pts:1} // 👑 王族基底（可分配8點，以0計）
 };
 let curCreate = { rawCls: 'm_royal', cls: 'royal', str:0, dex:0, con:0, int:0, wis:0, cha:0 };
 
