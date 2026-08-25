@@ -10,8 +10,8 @@
  *   手動技能會自動出現在這列，不必回來改這支。點下去就是核心的 manualCast(id)，
  *   MP／冷卻／沉默／屏障中不可行動……全部由核心自己判（我們不重刻條件，只把入口搬過來）。
  *
- * 按鈕上只放「會改變玩家動作」的三件事：技能名、MP 消耗、冷卻剩幾秒；
- *   MP 不夠→數字轉紅、冷卻中→圖示上蓋秒數，兩者都讓按鈕變淡。其餘（技能說明）走長按
+ * 按鈕只有圖示（與技能書同一張，認圖不認字），一排固定 5 格。畫面上唯一的字是冷卻剩幾秒
+ *   （蓋在圖示上）；現在按不動（冷卻中／MP 不夠／屏障期間）就整顆調淡。技能名與說明走長按
  *   （data-tip-skill + .tip-host，由 afk-touchtip 借核心的資料框顯示；那支關掉也只是沒說明）。
  *
  * 顯示時機一律自己判，不讀別的外掛掛的 class（那些可被玩家關掉）：
@@ -44,6 +44,8 @@
   // 與 css/style.css 手機版面那條完全一致（afk-mapbar / afk-battlehud / afk-battlebuffs 也用同一條）
   var MOBILE_MQ = '(max-width: 768px), (max-height: 520px) and (pointer: coarse)';
   var TICKS_PER_SEC = 10;   // 核心 TICK_MS=100 → manualCd 是 tick 數，除以這個才是秒
+  var COLS = 5;             // 一排幾格（格子寬度固定，不隨學會幾支技能而變）
+  var ICON_MAX = 44;        // 圖示上限 px（技能圖檔原生 64px，放太大會糊）
 
   var host = null, mq = null, lastIds = '', lastSig = '';
   var btns = {};   // skId → { el, cd, mp }
@@ -62,25 +64,24 @@
     var s = document.createElement('style');
     s.id = 'afk-skillbar-style';
     s.textContent = [
-      /* 外觀無條件宣告（沒顯示時 display:none 看不到）；一列排不下就換行，不把戰鬥框擠掉 */
-      '#m-skillbar{display:none;flex-wrap:wrap;gap:6px;flex:0 0 auto;margin:2px 12px 0;padding:6px;background:#0f172a;border:1px solid #334155;border-radius:10px;}',
+      /* 外觀無條件宣告（沒顯示時 display:none 看不到）。固定 5 欄格線：技能再多也是一排 5 個、
+         第 6 個換下一排，格子寬度不會因為學會幾支而變 —— 位置固定，手指才記得住。 */
+      '#m-skillbar{display:none;grid-template-columns:repeat(' + COLS + ',1fr);gap:6px;flex:0 0 auto;margin:2px 12px 0;padding:6px;background:#0f172a;border:1px solid #334155;border-radius:10px;}',
       /* .on 由 JS 掛（＝現在在戰鬥畫面、且至少有一支手動技能）；顯示條件：手機 media query，或平板缺口 */
       '@media ' + MOBILE_MQ + '{',
-      '#m-skillbar.on{display:flex;}',
+      '#m-skillbar.on{display:grid;}',
       '}',
-      'body.afk-skillbar-tab #m-skillbar.on{display:flex;}',
-      '.mskb-btn{flex:1 1 0;min-width:56px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px 4px;background:#1e293b;border:1px solid #475569;border-radius:8px;color:#e2e8f0;font-family:inherit;font-size:11px;line-height:1.15;cursor:pointer;touch-action:manipulation;}',
+      'body.afk-skillbar-tab #m-skillbar.on{display:grid;}',
+      '.mskb-btn{display:flex;align-items:center;justify-content:center;padding:4px;background:#1e293b;border:1px solid #475569;border-radius:8px;cursor:pointer;touch-action:manipulation;}',
       /* 🚨 現在按不動只調淡、不用 disabled 屬性:disabled 的元素不吃 touch/mouse 事件,
          長按看說明(afk-touchtip 走 touchstart 委派)會連帶失效——而冷卻中正是最想看說明的時候。
          按下去由核心 manualCast 自己擋並寫日誌(「技能冷卻中。」/「MP 不足。」),條件不重刻一份。 */
       '.mskb-btn.is-off{opacity:.45;}',
-      '.mskb-ico{position:relative;width:30px;height:30px;flex:0 0 auto;}',
-      '.mskb-ico img{width:100%;height:100%;object-fit:contain;display:block;}',
-      '.mskb-cd{position:absolute;inset:0;display:none;align-items:center;justify-content:center;border-radius:5px;background:rgba(2,6,23,.74);color:#fca5a5;font-size:13px;font-weight:700;}',
-      '.mskb-btn.is-cd .mskb-cd{display:flex;}',
-      '.mskb-name{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}',
-      '.mskb-mp{font-size:10px;color:#7dd3fc;}',
-      '.mskb-btn.is-nomp .mskb-mp{color:#f87171;}'
+      /* 圖檔原生 64px：封頂在 ICON_MAX 免得放大糊掉，窄機才靠 width:100% 縮小 */
+      '.mskb-ico{position:relative;display:block;width:100%;max-width:' + ICON_MAX + 'px;aspect-ratio:1;}',
+      '.mskb-ico img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 1px 2px #000);}',
+      '.mskb-cd{position:absolute;inset:0;display:none;align-items:center;justify-content:center;border-radius:5px;background:rgba(2,6,23,.74);color:#fca5a5;font-size:15px;font-weight:700;font-family:inherit;}',
+      '.mskb-btn.is-cd .mskb-cd{display:flex;}'
     ].join('\n');
     (document.head || document.documentElement).appendChild(s);
   }
@@ -136,15 +137,9 @@
       cd.className = 'mskb-cd';
       ico.appendChild(img); ico.appendChild(cd);
 
-      var nm = document.createElement('span');
-      nm.className = 'mskb-name';
-      nm.textContent = sk.n;
-      var mp = document.createElement('span');
-      mp.className = 'mskb-mp';
-
-      b.appendChild(ico); b.appendChild(nm); b.appendChild(mp);
+      b.appendChild(ico);
       host.appendChild(b);
-      btns[id] = { el: b, cd: cd, mp: mp };
+      btns[id] = { el: b, cd: cd };
     });
   }
 
@@ -178,13 +173,10 @@
       if (!b) return;
       var off = barrier || s.cdSec > 0 || s.noMp;
       b.el.classList.toggle('is-cd', s.cdSec > 0);
-      b.el.classList.toggle('is-nomp', s.noMp);
       b.el.classList.toggle('is-off', off);
       b.el.setAttribute('aria-disabled', off ? 'true' : 'false');
       var cdTxt = s.cdSec > 0 ? String(s.cdSec) : '';
       if (b.cd.textContent !== cdTxt) b.cd.textContent = cdTxt;
-      var mpTxt = s.cost > 0 ? (s.cost + ' MP') : '';
-      if (b.mp.textContent !== mpTxt) b.mp.textContent = mpTxt;
     });
   }
 
