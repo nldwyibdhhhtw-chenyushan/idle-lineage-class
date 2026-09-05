@@ -1335,6 +1335,11 @@ function startGame() {
         gainItem('potion_heal', 100, true, true); // 紅色藥水 x 100
         if(player.cls === 'mage') {
             gainItem('bk_lightarrow', 1, true, true); // 光箭魔法書
+            gainItem('relic_priest_hood', 1, true, true);
+            gainItem('relic_priest_robe', 1, true, true);
+            gainItem('relic_priest_sandals', 1, true, true);
+            gainItem('relic_priest_gloves', 1, true, true);
+            gainItem('relic_priest_collar', 1, true, true);
         }
     }
     if (typeof loadSharedCollections === 'function') loadSharedCollections();   // 🎴🗡️🧰 創角：載入同模式共用收集圖鑑（新角色即承接同模式既有收集）

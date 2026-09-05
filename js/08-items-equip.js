@@ -1161,47 +1161,74 @@ function doEnhance(targetUid, isEq = true) {
     }
     
     let success = false, destroy = false, nochange = false;
-    // 防呆：強化值正規化為有效數字。若 en 為 undefined/NaN，(undefined < safe) 會是 false 而誤入失敗/爆裝分支，
-    //        導致看似 +0 的武器仍可能消失。此處統一視為 0，確保 +0(含未初始化 en)在安定值內必定成功、不會爆裝。
-    target.en = Number(target.en) || 0;
 
-    // 🏰 天堂經典衝裝規則（v3.0.76·機率單一真相 enhanceRollOutcome，見 js/01）：
-    //   安定值內 100% 成功（祝福卷軸跳級到安定值以上也不套用失敗/爆裝——成功在加值前判定）；
-    //   武器超過安定值：+9 前 1/3 過、2/3 爆；+9 起 1/6 過、1/6 無事、4/6 爆
-    //   防具(安定值>0)：1/目前強化值；防具(安定值0)/飾品：+0 1/2、+1 以上 1/(強化值×2)；失敗即爆裝
+// 防呆：強化值正規化為有效數字
+target.en = Number(target.en) || 0;
+
+// 🏰 天堂經典衝裝規則
+// 🌟 祝福卷軸：100%成功、固定+5、不爆裝
+const isBlessScroll = DB.items[scroll.id] && DB.items[scroll.id].isB;
+
+if (isBlessScroll) {
+    success = true;
+    destroy = false;
+    nochange = false;
+} else {
+    // 一般卷軸維持原本的天堂經典衝裝機率
     let _oc = enhanceRollOutcome(d, target.en);
+
     if (_oc === 'ok') success = true;
     else if (_oc === 'break') destroy = true;
-    else nochange = true;   // 武器 +9 起 1/6 無事：卷軸已消耗、強化值不變
+    else nochange = true;
+}
 
-    let fn = getItemFullName(target);
-    if (success) {
-        let add = (DB.items[scroll.id] && DB.items[scroll.id].isB) ? blessEnhanceGain(target.en) : 1;   // 🌟 祝福卷：+2 以下(含負值) +1~+3、+3~+5 +1~+2、+6 起等同一般卷 +1（純機率）
-        target.en = Math.min(_cap, target.en + add);   // 🔧 祝福卷軸跳級不超過上限
-        let prefix = (target.en > (d.safe||0)) ? "持續" : "";
-        let _enTxt = '+' + capEn(target.en, d);   // 🔧 顯示 +N（夾擠至強化上限）
-        logSys(`<span class="text-yellow-400 font-bold">${_enTxt} ${d.n} ${prefix}發出銀色的光芒。</span>`);
-    } else if (destroy) {
-        logSys(`<span class="text-red-500 font-bold">${fn} 強烈的發出銀色的光芒就消失了。</span>`);
-        if (isEq) {
-            player.eq[slot] = null; // 碎掉身上裝備
-            // ⚠️ 爆裝後必須同步副手／沙哈箭：否則主手被炸掉時 offwpn 會殘留在「無主手」的非法狀態，
-            //    沙哈之箭被炸掉時 eq.arrow=null 又不會重新注入 → 沙哈之弓在玩家手動重裝前射不出來。
-            if (typeof syncShahaArrow === 'function') syncShahaArrow();
-            if (typeof syncDualWield === 'function') syncDualWield();
-        } else {
-            player.inv = player.inv.filter(i => i.uid !== target.uid); // 碎掉背包裝備
-        }
+let fn = getItemFullName(target);
+
+if (success) {
+
+    // 🌟 祝福卷軸固定 +5
+    // 一般卷軸維持 +1
+    let add = isBlessScroll ? 5 : 1;
+
+    // 🔧 強化值不超過裝備上限
+    target.en = Math.min(_cap, target.en + add);
+
+    let prefix = (target.en > (d.safe || 0)) ? "持續" : "";
+    let _enTxt = '+' + capEn(target.en, d);
+
+    logSys(
+        `<span class="text-yellow-400 font-bold">${_enTxt} ${d.n} ${prefix}發出銀色的光芒。</span>`
+    );
+
+} else if (destroy) {
+
+    logSys(
+        `<span class="text-red-500 font-bold">${fn} 強烈的發出銀色的光芒就消失了。</span>`
+    );
+
+    if (isEq) {
+        player.eq[slot] = null;
+
+        if (typeof syncShahaArrow === 'function') syncShahaArrow();
+        if (typeof syncDualWield === 'function') syncDualWield();
+
     } else {
-        logSys(`<span class="text-slate-400">${fn} 一瞬間發出銀色的光芒。</span>`);
+        player.inv = player.inv.filter(i => i.uid !== target.uid);
     }
-    
-    calcStats();
-    renderTabs();
-    closeModal();
-    
-    // 👇 自動存檔機制：不論成功、失敗或無變化，結算完立刻強制儲存進度！
-    saveGame(); 
+
+} else {
+
+    logSys(
+        `<span class="text-slate-400">${fn} 一瞬間發出銀色的光芒。</span>`
+    );
+}
+
+calcStats();
+renderTabs();
+closeModal();
+
+// 👇 自動存檔
+saveGame();
 }
 
 // 玩家身上的「減益(debuff)」狀態對照表（player.statuses 內具持續時間的鍵）
