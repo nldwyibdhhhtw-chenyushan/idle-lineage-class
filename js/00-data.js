@@ -267,19 +267,9 @@ const EXP_REQ_CLASSIC_V2 = [0,
     355567807179, 460815878104, 597678193901, 775786295683, 1007746398092, 1310070317520, 1703091412776, 2214018836609, 2878224487592, 3741691833870
 ];
 const EXP_REQ_LV69_KILLS = Math.ceil(EXP_REQ_CLASSIC_V2[69] / (69 * 69 + 1));   // 385,717
-const EXP_REQ_CLASSIC = EXP_REQ_CLASSIC_V2.map((req, lv) => {
-    if (lv >= 1 && lv <= 30) return 1000;
-    if (lv >= 31 && lv <= 50) return 3000;
-    if (lv >= 51 && lv <= 70) return 5000;
-    if (lv >= 71 && lv <= 80) return 10000;
-    if (lv >= 81 && lv < 90) return 20000;
-
-    if (lv >= 90 && lv < 100) {
-        return (lv * lv + 1) * EXP_REQ_LV69_KILLS;
-    }
-
-    return req;
-});   // index＝等級；Lv99→100＝3,780,798,034（約 38 億，不再是 3.74 兆）
+const EXP_REQ_CLASSIC = EXP_REQ_CLASSIC_V2.map((req, lv) =>
+    (lv >= 70 && lv < 100) ? (lv * lv + 1) * EXP_REQ_LV69_KILLS : req
+);   // index＝等級；Lv99→100＝3,780,798,034（約 38 億，不再是 3.74 兆）
 function _expReqClassicV2(lv) {   // v3.4.58 以前的經典表；僅供 expMigV=3 百分比遷移
     if (lv >= 100) return Infinity;
     return EXP_REQ_CLASSIC_V2[lv] || Infinity;
